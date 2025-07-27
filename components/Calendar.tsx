@@ -282,7 +282,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
     )
   }
 
-  const getEventColor = (type: string, priority?: string) => {
+  const getEventColor = (type: string) => {
     const baseColors = {
       meeting: 'from-blue-400 to-blue-600 border-blue-500 text-white shadow-blue-300',
       task: 'from-green-400 to-green-600 border-green-500 text-white shadow-green-300',
@@ -294,14 +294,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
       social: 'from-yellow-400 to-yellow-600 border-yellow-500 text-white shadow-yellow-300'
     }
     
-    let color = baseColors[type as keyof typeof baseColors] || baseColors.personal
-    
-    // Add priority styling
-    if (priority === 'high') {
-      color = color.replace('shadow-', 'shadow-lg shadow-')
-    } else if (priority === 'low') {
-      color = color.replace('from-', 'from-opacity-70 from-').replace('to-', 'to-opacity-70 to-')
-    }
+    const color = baseColors[type as keyof typeof baseColors] || baseColors.personal
     
     return `bg-gradient-to-r ${color}`
   }
@@ -323,14 +316,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
     return icons[type as keyof typeof icons] || '📅'
   }
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'border-l-4 border-red-500'
-      case 'medium': return 'border-l-4 border-yellow-500'
-      case 'low': return 'border-l-4 border-green-500'
-      default: return 'border-l-4 border-gray-400'
-    }
-  }
+
 
   const timeSlots = Array.from({ length: 15 }, (_, i) => i + 8) // 8:00 to 22:00
 
@@ -840,7 +826,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
               </div>
               
               <div className="space-y-4">
-                <div className={`p-4 rounded-xl ${getEventColor(showEventDetails.type, showEventDetails.priority)}`}>
+                <div className={`p-4 rounded-xl ${getEventColor(showEventDetails.type)}`}>
                   <div className="flex items-center space-x-3">
                     <span className="text-2xl">{getEventIcon(showEventDetails.type)}</span>
                     <div className="flex-1">
