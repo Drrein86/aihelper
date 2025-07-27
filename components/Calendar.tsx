@@ -52,10 +52,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
         time: '',
         location: '',
         type: 'meeting',
-        description: '',
-        reminder: 15,
-        repeat: 'none',
-        priority: 'medium'
+        description: ''
       })
       setShowAddEvent(false)
     }
@@ -805,10 +802,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
                       time: '',
                       location: '',
                       type: 'meeting',
-                      description: '',
-                      reminder: 15,
-                      repeat: 'none',
-                      priority: 'medium'
+                      description: ''
                     })
                   }}
                   className="flex-1 py-3 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition-all duration-300"
