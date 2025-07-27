@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rubik:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+  font-family: 'Rubik', 'Inter', Arial, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+@layer components {
+  /* Card Components */
+  .card-gradient {
+    @apply bg-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl border border-gray-200;
+  }
+  
+  /* Button Components */
+  .btn-primary {
+    @apply bg-black text-white px-8 py-4 rounded-full font-bold hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-lg border-2 border-black;
+  }
+
+  .btn-secondary {
+    @apply bg-white border-2 border-black text-black px-8 py-4 rounded-full font-bold hover:bg-black hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-lg;
+  }
+
+  /* Chat Bubbles */
+  .chat-bubble-user {
+    @apply bg-black text-white rounded-3xl px-6 py-4 max-w-xs ml-auto shadow-lg border border-gray-200;
+  }
+  
+  .chat-bubble-ai {
+    @apply bg-gray-100 text-black rounded-3xl px-6 py-4 max-w-xs mr-auto shadow-lg border border-gray-200;
+  }
+  
+  /* Cards */
+  .sidebar-card {
+    @apply bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200;
+  }
+  
+  /* Header */
+  .header-gradient {
+    @apply bg-black text-white;
+  }
+
+  /* Modern gradient for special elements */
+  .bg-gradient-candy {
+    @apply bg-gradient-to-r from-black to-gray-800;
+  }
+}
+
+/* Animations */
+.animate-gradient {
+  background-size: 400% 400%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* Hide scrollbar for fullHeight chat */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Enhanced shadow utilities */
+@layer utilities {
+  .shadow-soft {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .shadow-card {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .shadow-card-hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  }
+} 
