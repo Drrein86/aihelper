@@ -21,10 +21,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
     time: '',
     location: '',
     type: 'meeting' as const,
-    description: '',
-    reminder: 15,
-    repeat: 'none' as 'none' | 'daily' | 'weekly' | 'monthly',
-    priority: 'medium' as 'low' | 'medium' | 'high'
+    description: ''
   })
   
   const { events, addEvent, deleteEvent, updateEvent, addNotification } = useStore()
@@ -39,10 +36,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
         time: newEvent.time,
         location: newEvent.location,
         type: newEvent.type,
-        description: newEvent.description,
-        reminder: newEvent.reminder,
-        repeat: newEvent.repeat,
-        priority: newEvent.priority
+        description: newEvent.description
       }
       
       addEvent(event)
@@ -188,7 +182,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
                     {dayEvents.slice(0, 3).map((event, eventIndex) => (
                       <motion.div
                         key={event.id}
-                        className={`p-1 rounded text-xs font-medium truncate ${getEventColor(event.type, event.priority)} cursor-pointer`}
+                        className={`p-1 rounded text-xs font-medium truncate ${getEventColor(event.type)} cursor-pointer`}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.2, delay: eventIndex * 0.05 }}
@@ -517,7 +511,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
             todayEvents.slice(0, 3).map(event => (
               <motion.div
                 key={event.id}
-                className={`p-2 rounded-lg border-2 text-xs ${getEventColor(event.type, event.priority)} cursor-pointer hover:shadow-md transition-all duration-300`}
+                className={`p-2 rounded-lg border-2 text-xs ${getEventColor(event.type)} cursor-pointer hover:shadow-md transition-all duration-300`}
                 initial={{ scale: 0.9, opacity: 0, x: -10 }}
                 animate={{ scale: 1, opacity: 1, x: 0 }}
                 whileHover={{ scale: 1.02, y: -1 }}
@@ -532,7 +526,6 @@ export default function Calendar({ compact = false }: CalendarProps) {
                       ⏰ {event.time} {event.location && `• 📍 ${event.location}`}
                     </div>
                   </div>
-                  <div className={`w-2 h-6 rounded ${getPriorityColor(event.priority)}`}></div>
                 </div>
               </motion.div>
             ))
@@ -766,33 +759,9 @@ export default function Calendar({ compact = false }: CalendarProps) {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">עדיפות</label>
-                    <select
-                      value={newEvent.priority}
-                      onChange={(e) => setNewEvent(prev => ({ ...prev, priority: e.target.value as any }))}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                    >
-                      <option value="low">🟢 נמוכה</option>
-                      <option value="medium">🟡 בינונית</option>
-                      <option value="high">🔴 גבוהה</option>
-                    </select>
-                  </div>
+
                   
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">תזכורת (דקות)</label>
-                    <select
-                      value={newEvent.reminder}
-                      onChange={(e) => setNewEvent(prev => ({ ...prev, reminder: parseInt(e.target.value) }))}
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                    >
-                      <option value={0}>ללא תזכורת</option>
-                      <option value={5}>5 דקות</option>
-                      <option value={15}>15 דקות</option>
-                      <option value={30}>30 דקות</option>
-                      <option value={60}>שעה</option>
-                  </select>
-                </div>
+
               </div>
               
               <div>
