@@ -35,7 +35,7 @@ export default function Calendar({ compact = false }: CalendarProps) {
       const event = {
         id: Date.now(),
         title: newEvent.title,
-        date: selectedDate.toISOString(),
+        date: selectedDate,
         time: newEvent.time,
         location: newEvent.location,
         type: newEvent.type,
