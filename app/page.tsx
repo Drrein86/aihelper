@@ -68,12 +68,12 @@ export default function Home() {
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-200',
       textColor: 'text-blue-700',
-      height: 'h-48',
+      height: 'h-32',
       content: {
         date: currentTime?.getDate() || '--',
         month: currentTime?.toLocaleDateString('he-IL', { month: 'long' }),
         events: todayEvents,
-        preview: events.slice(0, 2).map(e => ({ title: e.title, time: e.time }))
+        preview: events.slice(0, 1).map(e => ({ title: e.title, time: e.time }))
       }
     },
     {
@@ -85,14 +85,13 @@ export default function Home() {
       bgColor: 'bg-green-50',
       borderColor: 'border-green-200',
       textColor: 'text-green-700',
-      height: 'h-56',
+      height: 'h-36',
       content: {
         change: '+2.5%',
         status: 'יום טוב בבורסה',
         stocks: ['AAPL', 'MSFT', 'TSLA'],
         preview: [
-          { symbol: 'AAPL', change: '+1.2%', price: '$150.25' },
-          { symbol: 'MSFT', change: '+0.8%', price: '$280.10' }
+          { symbol: 'AAPL', change: '+1.2%', price: '$150.25' }
         ]
       }
     },
@@ -105,12 +104,11 @@ export default function Home() {
       bgColor: 'bg-red-50',
       borderColor: 'border-red-200',
       textColor: 'text-red-700',
-      height: 'h-44',
+      height: 'h-32',
       content: {
         unread: 5,
         preview: [
-          { subject: 'פגישה חשובה', sender: 'מנהל הפרויקט', time: '10:30' },
-          { subject: 'עדכון מערכת', sender: 'מחלקת IT', time: '09:15' }
+          { subject: 'פגישה חשובה', sender: 'מנהל הפרויקט', time: '10:30' }
         ]
       }
     },
@@ -123,11 +121,11 @@ export default function Home() {
       bgColor: 'bg-purple-50',
       borderColor: 'border-purple-200',
       textColor: 'text-purple-700',
-      height: 'h-52',
+      height: 'h-36',
       content: {
         pending: pendingTasks,
         completed: tasks.filter(t => t.done).length,
-        preview: tasks.slice(0, 3).map(t => ({ text: t.text, done: t.done }))
+        preview: tasks.slice(0, 2).map(t => ({ text: t.text, done: t.done }))
       }
     },
     {
@@ -139,9 +137,9 @@ export default function Home() {
       bgColor: 'bg-yellow-50',
       borderColor: 'border-yellow-200',
       textColor: 'text-yellow-700',
-      height: 'h-40',
+      height: 'h-28',
       content: {
-        tip: 'התחל את היום עם תרגיל קצר של 10 דקות',
+        tip: 'התחל את היום עם תרגיל קצר',
         category: 'בריאות',
         icon: '💪'
       }
@@ -155,14 +153,13 @@ export default function Home() {
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-200',
       textColor: 'text-orange-700',
-      height: 'h-60',
+      height: 'h-40',
       content: {
         completed: 3,
         total: 5,
         challenges: [
           { name: '10,000 צעדים', progress: 80, icon: '🚶' },
-          { name: '8 כוסות מים', progress: 60, icon: '💧' },
-          { name: 'קריאה 30 דקות', progress: 40, icon: '📚' }
+          { name: '8 כוסות מים', progress: 60, icon: '💧' }
         ]
       }
     },
@@ -175,9 +172,9 @@ export default function Home() {
       bgColor: 'bg-indigo-50',
       borderColor: 'border-indigo-200',
       textColor: 'text-indigo-700',
-      height: 'h-36',
+      height: 'h-28',
       content: {
-        quote: 'הדרך הטובה ביותר לחזות את העתיד היא ליצור אותו',
+        quote: 'הדרך הטובה ביותר לחזות את העתיד...',
         author: 'פיטר דרוקר',
         category: 'מוטיבציה'
       }
@@ -191,10 +188,10 @@ export default function Home() {
       bgColor: 'bg-pink-50',
       borderColor: 'border-pink-200',
       textColor: 'text-pink-700',
-      height: 'h-48',
+      height: 'h-32',
       content: {
         unread: unreadNotifications,
-        preview: notifications.slice(0, 2).map(n => ({ title: n.title, message: n.message }))
+        preview: notifications.slice(0, 1).map(n => ({ title: n.title, message: n.message }))
       }
     }
   ]
@@ -234,20 +231,20 @@ export default function Home() {
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
       {/* Compact Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 z-50 shadow-lg h-16">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 z-50 shadow-lg h-12">
         <div className="container mx-auto px-6 h-full">
           <div className="flex items-center justify-between h-full">
             {/* Logo & Brand */}
             <div className="flex items-center gap-3">
               <motion.div 
-                className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex-center shadow-lg"
+                className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex-center shadow-lg"
                 whileHover={{ scale: 1.05, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Zap className="text-white" size={20} />
+                <Icons.Zap className="text-white" size={16} />
               </motion.div>
               <div>
-                <h1 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-sm font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {getTimeBasedGreeting()}, {user.name}
                 </h1>
                 <p className="text-xs text-gray-600">העוזר החכם שלך</p>
@@ -255,42 +252,42 @@ export default function Home() {
             </div>
 
             {/* Center Stats */}
-            <div className="hidden lg:flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-2">
               <motion.div 
-                className="flex items-center gap-2 px-3 py-1 bg-blue-50 rounded-lg border border-blue-200"
+                className="flex items-center gap-1 px-2 py-1 bg-blue-50 rounded-md border border-blue-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Calendar className="text-blue-600" size={14} />
+                <Icons.Calendar className="text-blue-600" size={12} />
                 <span className="text-xs font-semibold text-blue-700">{todayEvents} אירועים</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-2 px-3 py-1 bg-green-50 rounded-lg border border-green-200"
+                className="flex items-center gap-1 px-2 py-1 bg-green-50 rounded-md border border-green-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Check className="text-green-600" size={14} />
+                <Icons.Check className="text-green-600" size={12} />
                 <span className="text-xs font-semibold text-green-700">{pendingTasks} משימות</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-2 px-3 py-1 bg-orange-50 rounded-lg border border-orange-200"
+                className="flex items-center gap-1 px-2 py-1 bg-orange-50 rounded-md border border-orange-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Bell className="text-orange-600" size={14} />
+                <Icons.Bell className="text-orange-600" size={12} />
                 <span className="text-xs font-semibold text-orange-700">{unreadNotifications} התראות</span>
               </motion.div>
             </div>
 
             {/* Right Section */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {/* Live Clock */}
               <motion.div 
-                className="flex items-center gap-2 px-3 py-1 bg-gray-100 rounded-lg border border-gray-200"
+                className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-md border border-gray-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Clock className="text-gray-600" size={14} />
+                <Icons.Clock className="text-gray-600" size={12} />
                 <span className="text-xs font-bold text-gray-900">
                   {currentTime?.toLocaleTimeString('he-IL', { 
                     hour: '2-digit', 
@@ -306,39 +303,39 @@ export default function Home() {
       </header>
 
       {/* Main Content - Split Layout */}
-      <main className="h-[calc(100vh-4rem)] flex">
+      <main className="h-[calc(100vh-3rem)] flex">
         {/* Left Side - AI Chat (50% width) */}
-        <div className="w-1/2 h-full p-4">
+        <div className="w-1/2 h-full p-3">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-3xl shadow-2xl border border-gray-200 h-full overflow-hidden"
+            className="bg-white rounded-2xl shadow-lg border border-gray-200 h-full overflow-hidden"
           >
-            {/* Premium Chat Header */}
-            <div className="p-6 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex-center shadow-lg">
-                  <Icons.Message className="text-white" size={24} />
+            {/* Compact Chat Header */}
+            <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex-center shadow-lg">
+                  <Icons.Message className="text-white" size={16} />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-lg font-bold text-white">
                     עוזר חכם
                   </h2>
-                  <p className="text-white/80">שאל אותי כל שאלה על כל הפיצ'רים</p>
+                  <p className="text-white/80 text-xs">שאל אותי כל שאלה על כל הפיצ'רים</p>
                 </div>
               </div>
             </div>
             
             {/* Chat Content */}
-            <div className="h-[calc(100%-5rem)]">
+            <div className="h-[calc(100%-4rem)]">
               <ChatBot embedded={true} fullHeight={true} />
             </div>
           </motion.div>
         </div>
 
-        {/* Right Side - Pinterest Style Features (50% width) */}
-        <div className="w-1/2 h-full p-4 overflow-y-auto">
-          <div className="columns-2 gap-4">
+        {/* Right Side - Compact Pinterest Style Features (50% width) */}
+        <div className="w-1/2 h-full p-3 overflow-y-auto">
+          <div className="columns-2 gap-3">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.id}
@@ -349,26 +346,26 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => openFeature(feature.id)}
                 className={`
-                  bg-white rounded-2xl shadow-lg border-2 cursor-pointer mb-4 break-inside-avoid
-                  transition-all duration-300 hover:shadow-2xl
+                  bg-white rounded-xl shadow-md border cursor-pointer mb-3 break-inside-avoid
+                  transition-all duration-300 hover:shadow-lg
                   ${feature.borderColor} hover:border-opacity-100
                   ${feature.height}
                 `}
               >
-                <div className="p-4 h-full flex flex-col">
+                <div className="p-3 h-full flex flex-col">
                   {/* Header */}
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-10 h-10 bg-gradient-to-br ${feature.color} rounded-xl flex-center shadow-lg`}>
-                      <feature.icon className="text-white" size={20} />
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className={`w-8 h-8 bg-gradient-to-br ${feature.color} rounded-lg flex-center shadow-md`}>
+                      <feature.icon className="text-white" size={16} />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-gray-900">{feature.title}</h3>
+                      <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
                       <p className="text-xs text-gray-600">{feature.description}</p>
                     </div>
                   </div>
 
                   {/* Content Preview */}
-                  <div className={`flex-1 ${feature.bgColor} rounded-xl border ${feature.borderColor} p-3`}>
+                  <div className={`flex-1 ${feature.bgColor} rounded-lg border ${feature.borderColor} p-2`}>
                     {feature.id === 'calendar' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
@@ -544,8 +541,8 @@ export default function Home() {
                   </div>
 
                   {/* Action Button */}
-                  <div className="mt-3">
-                    <div className={`w-full py-2 px-3 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded-lg text-center`}>
+                  <div className="mt-2">
+                    <div className={`w-full py-1.5 px-2 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded-md text-center`}>
                       פתח {feature.title}
                     </div>
                   </div>
