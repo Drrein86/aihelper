@@ -6,7 +6,8 @@ import { GoogleAuth } from 'google-auth-library'
 export const GOOGLE_CONFIG = {
   client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
   client_secret: process.env.GOOGLE_CLIENT_SECRET,
-  redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || 'http://localhost:3000/auth/callback',
+  redirect_uri: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI || 
+    (typeof window !== 'undefined' ? `${window.location.origin}/api/auth/callback` : 'http://localhost:3000/api/auth/callback'),
   scope: [
     'https://www.googleapis.com/auth/gmail.readonly',
     'https://www.googleapis.com/auth/calendar.readonly',
@@ -57,18 +58,38 @@ export async function exchangeCodeForTokens(code: string) {
   }
 }
 
-// אחסון וקריאת tokens מ-localStorage
+// אחסון וקריאת tokens מ-cookies ו-localStorage
 export const tokenStorage = {
   set: (tokens: any) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('google_tokens', JSON.stringify(tokens))
+      // גם בקוקיז כגיבוי
+      document.cookie = `google_tokens=${JSON.stringify(tokens)}; path=/; max-age=${60 * 60 * 24 * 7}; samesite=lax`
     }
   },
   
   get: () => {
     if (typeof window !== 'undefined') {
-      const tokens = localStorage.getItem('google_tokens')
-      return tokens ? JSON.parse(tokens) : null
+      // נסה קודם מ-localStorage
+      let tokens = localStorage.getItem('google_tokens')
+      if (tokens) {
+        return JSON.parse(tokens)
+      }
+      
+      // אם לא, נסה מהקוקיז
+      const cookies = document.cookie.split(';')
+      const tokenCookie = cookies.find(cookie => cookie.trim().startsWith('google_tokens='))
+      if (tokenCookie) {
+        try {
+          const tokenValue = tokenCookie.split('=')[1]
+          tokens = decodeURIComponent(tokenValue)
+          // שמור גם ב-localStorage
+          localStorage.setItem('google_tokens', tokens)
+          return JSON.parse(tokens)
+        } catch (error) {
+          console.error('Failed to parse tokens from cookie:', error)
+        }
+      }
     }
     return null
   },
@@ -76,6 +97,8 @@ export const tokenStorage = {
   clear: () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('google_tokens')
+      // נקה גם את הקוקי
+      document.cookie = 'google_tokens=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
     }
   }
 }

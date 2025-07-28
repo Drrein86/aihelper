@@ -19,7 +19,7 @@
 - `OPENAI_API_KEY` - מפתח OpenAI
 - `NEXT_PUBLIC_GOOGLE_CLIENT_ID` - Google OAuth Client ID
 - `GOOGLE_CLIENT_SECRET` - Google OAuth Secret
-- `NEXT_PUBLIC_GOOGLE_REDIRECT_URI` - צריך להיות: `https://yourdomain.vercel.app/auth/callback`
+- `NEXT_PUBLIC_GOOGLE_REDIRECT_URI` - צריך להיות: `https://aihelper-theta.vercel.app/api/auth/callback`
 - `NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY` - למניות (אופציונלי)
 
 ### 4. Build Configuration 🟡
@@ -79,9 +79,11 @@
 ### שלב 2: Google OAuth Setup  
 1. Google Cloud Console
 2. עדכן Authorized redirect URIs:
-   - `https://yourdomain.vercel.app/auth/callback`
+   - `https://aihelper-theta.vercel.app/api/auth/callback` ✅ (תוקן!)
+   - `http://localhost:3000/api/auth/callback` (לפיתוח מקומי)
 3. עדכן Authorized JavaScript origins:
-   - `https://yourdomain.vercel.app`
+   - `https://aihelper-theta.vercel.app`
+   - `http://localhost:3000` (לפיתוח מקומי)
 
 ### שלב 3: API Keys
 1. OpenAI API Key

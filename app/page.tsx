@@ -41,13 +41,28 @@ export default function Home() {
     return eventDate.toDateString() === new Date().toDateString()
   }).length
   
-  // Update time every second
+  // Update time every second + handle auth callback
   useEffect(() => {
     setMounted(true)
     setCurrentTime(new Date())
     const timer = setInterval(() => {
       setCurrentTime(new Date())
     }, 1000)
+
+    // בדיקה אם יש פרמטרי auth בURL
+    const urlParams = new URLSearchParams(window.location.search)
+    const authStatus = urlParams.get('auth')
+    
+    if (authStatus === 'success') {
+      console.log('✅ Google התחברות הצליחה!')
+      // מסיר את הפרמטר מה-URL
+      window.history.replaceState({}, document.title, window.location.pathname)
+    } else if (authStatus === 'error') {
+      console.error('❌ שגיאה בהתחברות Google')
+      // מסיר את הפרמטר מה-URL
+      window.history.replaceState({}, document.title, window.location.pathname)
+    }
+
     return () => clearInterval(timer)
   }, [])
 
