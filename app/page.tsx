@@ -62,33 +62,32 @@ export default function Home() {
     {
       id: 'calendar',
       title: 'לוח השנה',
-      description: 'ניהול אירועים ופגישות',
+      description: 'אירועים ופגישות',
       icon: Icons.Calendar,
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-200',
       textColor: 'text-blue-700',
-      height: 'h-24',
+      height: 'h-20',
       content: {
         date: currentTime?.getDate() || '--',
-        month: currentTime?.toLocaleDateString('he-IL', { month: 'long' }),
         events: todayEvents,
         preview: events.slice(0, 1).map(e => ({ title: e.title, time: e.time }))
       }
     },
     {
       id: 'stocks',
-      title: 'מניות והשקעות',
-      description: 'מעקב אחר תיק ההשקעות',
+      title: 'מניות',
+      description: 'תיק השקעות',
       icon: Icons.TrendingUp,
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-50',
       borderColor: 'border-green-200',
       textColor: 'text-green-700',
-      height: 'h-28',
+      height: 'h-20',
       content: {
         change: '+2.5%',
-        status: 'יום טוב בבורסה',
+        status: 'יום טוב',
         stocks: ['AAPL', 'MSFT', 'TSLA'],
         preview: [
           { symbol: 'AAPL', change: '+1.2%', price: '$150.25' }
@@ -97,14 +96,14 @@ export default function Home() {
     },
     {
       id: 'gmail',
-      title: 'דואר אלקטרוני',
-      description: 'ניהול הודעות ומיילים',
+      title: 'דואר',
+      description: 'הודעות ומיילים',
       icon: Icons.Mail,
       color: 'from-red-500 to-red-600',
       bgColor: 'bg-red-50',
       borderColor: 'border-red-200',
       textColor: 'text-red-700',
-      height: 'h-24',
+      height: 'h-20',
       content: {
         unread: 5,
         preview: [
@@ -115,23 +114,23 @@ export default function Home() {
     {
       id: 'tasks',
       title: 'משימות',
-      description: 'ניהול משימות ויעדים',
+      description: 'משימות ויעדים',
       icon: Icons.Check,
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50',
       borderColor: 'border-purple-200',
       textColor: 'text-purple-700',
-      height: 'h-28',
+      height: 'h-20',
       content: {
         pending: pendingTasks,
         completed: tasks.filter(t => t.done).length,
-        preview: tasks.slice(0, 2).map(t => ({ text: t.text, done: t.done }))
+        preview: tasks.slice(0, 1).map(t => ({ text: t.text, done: t.done }))
       }
     },
     {
       id: 'recommendations',
-      title: 'המלצות אישיות',
-      description: 'המלצות מותאמות אישית',
+      title: 'המלצות',
+      description: 'מותאמות אישית',
       icon: Icons.Sparkles,
       color: 'from-yellow-500 to-yellow-600',
       bgColor: 'bg-yellow-50',
@@ -139,21 +138,21 @@ export default function Home() {
       textColor: 'text-yellow-700',
       height: 'h-20',
       content: {
-        tip: 'התחל את היום עם תרגיל קצר',
+        tip: 'תרגיל קצר',
         category: 'בריאות',
         icon: '💪'
       }
     },
     {
       id: 'challenges',
-      title: 'אתגרים יומיים',
-      description: 'מטרות ואתגרים אישיים',
+      title: 'אתגרים',
+      description: 'מטרות יומיות',
       icon: Icons.TrendingUp,
       color: 'from-orange-500 to-orange-600',
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-200',
       textColor: 'text-orange-700',
-      height: 'h-32',
+      height: 'h-20',
       content: {
         completed: 3,
         total: 5,
@@ -165,8 +164,8 @@ export default function Home() {
     },
     {
       id: 'inspiration',
-      title: 'השראה וציטוטים',
-      description: 'ציטוטים מעוררי השראה',
+      title: 'השראה',
+      description: 'ציטוטים מעוררים',
       icon: Icons.Sparkles,
       color: 'from-indigo-500 to-indigo-600',
       bgColor: 'bg-indigo-50',
@@ -174,7 +173,7 @@ export default function Home() {
       textColor: 'text-indigo-700',
       height: 'h-20',
       content: {
-        quote: 'הדרך הטובה ביותר לחזות את העתיד...',
+        quote: 'הדרך הטובה ביותר...',
         author: 'פיטר דרוקר',
         category: 'מוטיבציה'
       }
@@ -182,13 +181,13 @@ export default function Home() {
     {
       id: 'notifications',
       title: 'התראות',
-      description: 'כל ההתראות החשובות',
+      description: 'התראות חשובות',
       icon: Icons.Bell,
       color: 'from-pink-500 to-pink-600',
       bgColor: 'bg-pink-50',
       borderColor: 'border-pink-200',
       textColor: 'text-pink-700',
-      height: 'h-24',
+      height: 'h-20',
       content: {
         unread: unreadNotifications,
         preview: notifications.slice(0, 1).map(n => ({ title: n.title, message: n.message }))
@@ -231,17 +230,17 @@ export default function Home() {
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
       {/* Ultra Compact Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 z-50 shadow-lg h-10">
-        <div className="container mx-auto px-4 h-full">
+      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 z-50 shadow-lg h-8">
+        <div className="container mx-auto px-3 h-full">
           <div className="flex items-center justify-between h-full">
             {/* Logo & Brand */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <motion.div 
-                className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-md flex-center shadow-lg"
+                className="w-5 h-5 bg-gradient-to-br from-blue-500 to-purple-600 rounded flex-center shadow-lg"
                 whileHover={{ scale: 1.05, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Zap className="text-white" size={12} />
+                <Icons.Zap className="text-white" size={10} />
               </motion.div>
               <div>
                 <h1 className="text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -254,28 +253,28 @@ export default function Home() {
             {/* Center Stats */}
             <div className="hidden lg:flex items-center gap-1">
               <motion.div 
-                className="flex items-center gap-1 px-1.5 py-0.5 bg-blue-50 rounded border border-blue-200"
+                className="flex items-center gap-1 px-1 py-0.5 bg-blue-50 rounded border border-blue-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Calendar className="text-blue-600" size={10} />
-                <span className="text-xs font-semibold text-blue-700">{todayEvents} אירועים</span>
+                <Icons.Calendar className="text-blue-600" size={8} />
+                <span className="text-xs font-semibold text-blue-700">{todayEvents}</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-1 px-1.5 py-0.5 bg-green-50 rounded border border-green-200"
+                className="flex items-center gap-1 px-1 py-0.5 bg-green-50 rounded border border-green-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Check className="text-green-600" size={10} />
-                <span className="text-xs font-semibold text-green-700">{pendingTasks} משימות</span>
+                <Icons.Check className="text-green-600" size={8} />
+                <span className="text-xs font-semibold text-green-700">{pendingTasks}</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-1 px-1.5 py-0.5 bg-orange-50 rounded border border-orange-200"
+                className="flex items-center gap-1 px-1 py-0.5 bg-orange-50 rounded border border-orange-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Bell className="text-orange-600" size={10} />
-                <span className="text-xs font-semibold text-orange-700">{unreadNotifications} התראות</span>
+                <Icons.Bell className="text-orange-600" size={8} />
+                <span className="text-xs font-semibold text-orange-700">{unreadNotifications}</span>
               </motion.div>
             </div>
 
@@ -283,11 +282,11 @@ export default function Home() {
             <div className="flex items-center gap-1">
               {/* Live Clock */}
               <motion.div 
-                className="flex items-center gap-1 px-1.5 py-0.5 bg-gray-100 rounded border border-gray-200"
+                className="flex items-center gap-1 px-1 py-0.5 bg-gray-100 rounded border border-gray-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Clock className="text-gray-600" size={10} />
+                <Icons.Clock className="text-gray-600" size={8} />
                 <span className="text-xs font-bold text-gray-900">
                   {currentTime?.toLocaleTimeString('he-IL', { 
                     hour: '2-digit', 
@@ -303,60 +302,60 @@ export default function Home() {
       </header>
 
       {/* Main Content - Ultra Compact Split Layout */}
-      <main className="h-[calc(100vh-2.5rem)] flex">
+      <main className="h-[calc(100vh-2rem)] flex">
         {/* Left Side - AI Chat (50% width) */}
-        <div className="w-1/2 h-full p-2">
+        <div className="w-1/2 h-full p-1.5">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-xl shadow-md border border-gray-200 h-full overflow-hidden"
+            className="bg-white rounded-lg shadow-sm border border-gray-200 h-full overflow-hidden"
           >
             {/* Ultra Compact Chat Header */}
-            <div className="p-3 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-white/20 backdrop-blur-sm rounded-md flex-center shadow-md">
-                  <Icons.Message className="text-white" size={12} />
+            <div className="p-2 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
+              <div className="flex items-center gap-1.5">
+                <div className="w-5 h-5 bg-white/20 backdrop-blur-sm rounded flex-center shadow-sm">
+                  <Icons.Message className="text-white" size={10} />
                 </div>
                 <div>
-                  <h2 className="text-sm font-bold text-white">
+                  <h2 className="text-xs font-bold text-white">
                     עוזר חכם
                   </h2>
-                  <p className="text-white/80 text-xs">שאל אותי כל שאלה על כל הפיצ'רים</p>
+                  <p className="text-white/80 text-xs">שאל אותי כל שאלה</p>
                 </div>
               </div>
             </div>
             
             {/* Chat Content */}
-            <div className="h-[calc(100%-3rem)]">
+            <div className="h-[calc(100%-2.5rem)]">
               <ChatBot embedded={true} fullHeight={true} />
             </div>
           </motion.div>
         </div>
 
         {/* Right Side - Ultra Compact Pinterest Style Features (50% width) */}
-        <div className="w-1/2 h-full p-2 overflow-y-auto">
-          <div className="columns-2 gap-2">
+        <div className="w-1/2 h-full p-1.5 overflow-y-auto">
+          <div className="columns-2 gap-1.5">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -2 }}
+                whileHover={{ scale: 1.02, y: -1 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => openFeature(feature.id)}
                 className={`
-                  bg-white rounded-lg shadow-sm border cursor-pointer mb-2 break-inside-avoid
+                  bg-white rounded-md shadow-sm border cursor-pointer mb-1.5 break-inside-avoid
                   transition-all duration-300 hover:shadow-md
                   ${feature.borderColor} hover:border-opacity-100
                   ${feature.height}
                 `}
               >
-                <div className="p-2 h-full flex flex-col">
+                <div className="p-1.5 h-full flex flex-col">
                   {/* Header */}
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <div className={`w-6 h-6 bg-gradient-to-br ${feature.color} rounded-md flex-center shadow-sm`}>
-                      <feature.icon className="text-white" size={12} />
+                  <div className="flex items-center gap-1 mb-1">
+                    <div className={`w-5 h-5 bg-gradient-to-br ${feature.color} rounded flex-center shadow-sm`}>
+                      <feature.icon className="text-white" size={10} />
                     </div>
                     <div>
                       <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
@@ -365,21 +364,21 @@ export default function Home() {
                   </div>
 
                   {/* Content Preview */}
-                  <div className={`flex-1 ${feature.bgColor} rounded-md border ${feature.borderColor} p-1.5`}>
+                  <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-1`}>
                     {feature.id === 'calendar' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-sm font-bold text-gray-900 mb-1">
+                          <div className="text-xs font-bold text-gray-900 mb-0.5">
                             {feature.content.date}
                           </div>
                           <div className="text-xs text-gray-600">
-                            {feature.content.events} אירועים היום
+                            {feature.content.events} אירועים
                           </div>
                         </div>
                         {feature.content.preview.length > 0 && (
-                          <div className="mt-1">
-                            <div className="flex items-center gap-1 text-xs">
-                              <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+                          <div className="mt-0.5">
+                            <div className="flex items-center gap-0.5 text-xs">
+                              <div className="w-0.5 h-0.5 bg-blue-500 rounded-full"></div>
                               <span className="text-gray-700 truncate">{feature.content.preview[0].title}</span>
                             </div>
                           </div>
@@ -390,7 +389,7 @@ export default function Home() {
                     {feature.id === 'stocks' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-sm font-bold text-green-600 mb-1">
+                          <div className="text-xs font-bold text-green-600 mb-0.5">
                             {feature.content.change}
                           </div>
                           <div className="text-xs text-gray-600">
@@ -409,7 +408,7 @@ export default function Home() {
                     {feature.id === 'gmail' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-sm font-bold text-gray-900 mb-1">
+                          <div className="text-xs font-bold text-gray-900 mb-0.5">
                             {feature.content.unread}
                           </div>
                           <div className="text-xs text-gray-600">
@@ -426,7 +425,7 @@ export default function Home() {
                     {feature.id === 'tasks' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-sm font-bold text-gray-900 mb-1">
+                          <div className="text-xs font-bold text-gray-900 mb-0.5">
                             {feature.content.pending}
                           </div>
                           <div className="text-xs text-gray-600">
@@ -435,11 +434,11 @@ export default function Home() {
                         </div>
                         <div className="space-y-0.5">
                           {feature.content.preview.map((task, idx) => (
-                            <div key={idx} className="flex items-center gap-1 text-xs">
-                              <div className={`w-1.5 h-1.5 rounded-full border flex-center ${
+                            <div key={idx} className="flex items-center gap-0.5 text-xs">
+                              <div className={`w-1 h-1 rounded-full border flex-center ${
                                 task.done ? 'bg-green-500 border-green-500' : 'border-gray-300'
                               }`}>
-                                {task.done && <Icons.Check className="text-white" size={4} />}
+                                {task.done && <Icons.Check className="text-white" size={3} />}
                               </div>
                               <span className={`flex-1 truncate ${task.done ? 'line-through text-gray-500' : 'text-gray-700'}`}>
                                 {task.text}
@@ -452,11 +451,11 @@ export default function Home() {
 
                     {feature.id === 'recommendations' && (
                       <div className="h-full flex flex-col justify-center text-center">
-                        <div className="text-sm mb-1">{feature.content.icon}</div>
+                        <div className="text-xs mb-0.5">{feature.content.icon}</div>
                         <div className="text-xs text-gray-900">
                           {feature.content.tip}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className="text-xs text-gray-500 mt-0.5">
                           {feature.content.category}
                         </div>
                       </div>
@@ -465,23 +464,23 @@ export default function Home() {
                     {feature.id === 'challenges' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-sm font-bold text-gray-900 mb-1">
+                          <div className="text-xs font-bold text-gray-900 mb-0.5">
                             {feature.content.completed}/{feature.content.total}
                           </div>
                           <div className="text-xs text-gray-600">
-                            אתגרים הושלמו
+                            הושלמו
                           </div>
                         </div>
-                        <div className="space-y-1">
+                        <div className="space-y-0.5">
                           {feature.content.challenges.map((challenge, idx) => (
                             <div key={idx} className="text-xs">
-                              <div className="flex items-center gap-1 mb-1">
+                              <div className="flex items-center gap-0.5 mb-0.5">
                                 <span>{challenge.icon}</span>
                                 <span className="font-semibold text-gray-700">{challenge.name}</span>
                               </div>
-                              <div className="w-full bg-gray-200 rounded-full h-1">
+                              <div className="w-full bg-gray-200 rounded-full h-0.5">
                                 <div 
-                                  className="bg-orange-500 h-1 rounded-full" 
+                                  className="bg-orange-500 h-0.5 rounded-full" 
                                   style={{ width: `${challenge.progress}%` }}
                                 ></div>
                               </div>
@@ -493,7 +492,7 @@ export default function Home() {
 
                     {feature.id === 'inspiration' && (
                       <div className="h-full flex flex-col justify-center text-center">
-                        <div className="text-xs text-gray-900 mb-1 italic">
+                        <div className="text-xs text-gray-900 mb-0.5 italic">
                           "{feature.content.quote}"
                         </div>
                         <div className="text-xs text-gray-600">
@@ -505,7 +504,7 @@ export default function Home() {
                     {feature.id === 'notifications' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-sm font-bold text-gray-900 mb-1">
+                          <div className="text-xs font-bold text-gray-900 mb-0.5">
                             {feature.content.unread}
                           </div>
                           <div className="text-xs text-gray-600">
@@ -521,9 +520,9 @@ export default function Home() {
                   </div>
 
                   {/* Action Button */}
-                  <div className="mt-1">
-                    <div className={`w-full py-1 px-1.5 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
-                      פתח {feature.title}
+                  <div className="mt-0.5">
+                    <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
+                      פתח
                     </div>
                   </div>
                 </div>
