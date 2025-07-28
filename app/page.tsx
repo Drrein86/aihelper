@@ -544,18 +544,22 @@ export default function Home() {
                             </div>
                           </div>
                                                   <div className="space-y-0.5">
-                          {feature.content.preview?.map((task, idx) => (
-                            <div key={idx} className="flex items-center gap-0.5 text-xs">
-                              <div className={`w-1 h-1 rounded-full border flex-center ${
-                                task.done ? 'bg-green-500 border-green-500' : 'border-gray-300'
-                              }`}>
-                                {task.done && <Icons.Check className="text-white" size={3} />}
+                          {feature.content.preview?.map((task, idx) => {
+                            // Type guard to ensure this is a task object with done property
+                            if (!('done' in task) || !('text' in task)) return null;
+                            return (
+                              <div key={idx} className="flex items-center gap-0.5 text-xs">
+                                <div className={`w-1 h-1 rounded-full border flex-center ${
+                                  task.done ? 'bg-green-500 border-green-500' : 'border-gray-300'
+                                }`}>
+                                  {task.done && <Icons.Check className="text-white" size={3} />}
+                                </div>
+                                <span className={`flex-1 truncate ${task.done ? 'line-through text-gray-500' : 'text-gray-700'}`}>
+                                  {task.text}
+                                </span>
                               </div>
-                              <span className={`flex-1 truncate ${task.done ? 'line-through text-gray-500' : 'text-gray-700'}`}>
-                                {task.text}
-                              </span>
-                            </div>
-                          ))}
+                            );
+                          })}
                           </div>
                         </div>
                       )}
