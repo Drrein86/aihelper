@@ -2,25 +2,25 @@
 :root {
   /* === COLOR PALETTE === */
   /* Primary Colors */
-  --color-primary: #0066ff;
-  --color-primary-light: #3385ff;
-  --color-primary-dark: #0052cc;
-  --color-primary-alpha: rgba(0, 102, 255, 0.1);
+  --color-primary: #2563eb;
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-alpha: rgba(37, 99, 235, 0.1);
   
   /* Neutral Colors */
-  --color-background: #0a0a0a;
-  --color-background-secondary: #111111;
-  --color-background-tertiary: #1a1a1a;
-  --color-surface: #1e1e1e;
-  --color-surface-hover: #252525;
-  --color-border: #2a2a2a;
-  --color-border-light: #3a3a3a;
+  --color-background: #ffffff;
+  --color-background-secondary: #f8fafc;
+  --color-background-tertiary: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-border-light: #cbd5e1;
   
   /* Text Colors */
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #b3b3b3;
-  --color-text-tertiary: #808080;
-  --color-text-inverse: #000000;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #ffffff;
   
   /* Status Colors */
   --color-success: #00d26a;
@@ -144,17 +144,17 @@ body {
 
 /* === UTILITY CLASSES === */
 
-/* Glass Morphism Effect */
+/* Modern Surface Effect */
 .glass {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
 .glass-hover:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-light);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Modern Card */

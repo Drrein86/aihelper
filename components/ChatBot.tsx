@@ -157,35 +157,25 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
         flex flex-col card border-none shadow-xl overflow-hidden
         relative
       `}>
-        {/* Enhanced Header */}
-        <div className="glass-hover p-4 border-b border-white/10 flex-center">
-          <motion.div 
-            className="flex items-center gap-3"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.div 
-              className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex-center shadow-lg"
-              whileHover={{ scale: 1.05, rotate: 5 }}
-              animate={{ 
-                boxShadow: ['0 0 20px rgba(59, 130, 246, 0.3)', '0 0 30px rgba(147, 51, 234, 0.4)', '0 0 20px rgba(59, 130, 246, 0.3)']
-              }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Icons.Zap className="text-white" size={24} />
-            </motion.div>
-            <div>
-              <h2 className="text-xl font-bold text-gradient">העוזר החכם שלך</h2>
-              <p className="text-sm text-secondary">תמיד פה לעזור ולייעץ</p>
+                  {/* Clean Header - Only for standalone mode */}
+          {!embedded && (
+            <div className="p-4 border-b border-gray-200 bg-gray-50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex-center shadow-lg">
+                  <Icons.Message className="text-white" size={20} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">עוזר חכם</h3>
+                  <p className="text-sm text-gray-600">שאל אותי כל שאלה</p>
+                </div>
+                <div className="flex items-center gap-1 ml-auto">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-200"></div>
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-400"></div>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1 ml-auto">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-200"></div>
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-400"></div>
-            </div>
-          </motion.div>
-        </div>
+          )}
 
         {/* Messages Area */}
         <div className="flex-1 p-6 space-y-4 overflow-y-auto scrollbar-thin">
@@ -198,7 +188,7 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
               transition={{ duration: 0.8 }}
             >
               <motion.div 
-                className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-500 rounded-3xl flex-center shadow-2xl"
+                                 className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl flex-center shadow-lg"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 animate={{ 
                   y: [0, -10, 0],
@@ -213,12 +203,12 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
                 <Icons.Message className="text-white" size={32} />
               </motion.div>
               
-              <h3 className="text-2xl font-bold text-gradient mb-3">
-                שלום! איך אפשר לעזור לך היום?
-              </h3>
-              <p className="text-lg text-secondary mb-8 leading-relaxed max-w-md mx-auto">
-                שאל אותי על המשימות, הכסף, הלוח זמנים או כל דבר אחר שתרצה
-              </p>
+                             <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                 שלום! איך אפשר לעזור לך היום?
+               </h3>
+               <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-md mx-auto">
+                 שאל אותי על המשימות, הכסף, הלוח זמנים או כל דבר אחר שתרצה
+               </p>
               
               {/* Enhanced Quick Start Suggestions */}
               {showSuggestions && (
@@ -232,7 +222,7 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
                     <motion.button
                       key={index}
                       onClick={() => handleSuggestionClick(suggestion.text)}
-                      className="glass-hover p-4 rounded-2xl transition-all duration-300 group border border-white/20"
+                      className="bg-white hover:bg-gray-50 p-4 rounded-2xl transition-all duration-300 group border border-gray-200 shadow-sm hover:shadow-md"
                       whileHover={{ scale: 1.03, y: -3 }}
                       whileTap={{ scale: 0.98 }}
                       initial={{ opacity: 0, y: 30 }}
@@ -242,9 +232,9 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
                       <div className={`text-3xl mb-3 ${suggestion.color} transition-all duration-300 group-hover:scale-110`}>
                         {suggestion.emoji}
                       </div>
-                      <div className="font-semibold text-sm text-primary group-hover:text-gradient leading-relaxed">
-                        {suggestion.text}
-                      </div>
+                                             <div className="font-semibold text-sm text-gray-700 group-hover:text-blue-600 leading-relaxed">
+                         {suggestion.text}
+                       </div>
                     </motion.button>
                   ))}
                 </motion.div>
