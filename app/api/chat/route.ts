@@ -55,9 +55,9 @@ export async function POST(req: NextRequest) {
 
     let completion
     try {
-      // timeout של 8 שניות (פחות מ-10 של Vercel)
+      // timeout של 9 שניות (פחות מ-10 של Vercel)
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 8000)
+      const timeoutId = setTimeout(() => controller.abort(), 9000)
 
       completion = await openai.chat.completions.create({
         model: 'gpt-3.5-turbo',
@@ -73,9 +73,9 @@ export async function POST(req: NextRequest) {
     } catch (openaiError: any) {
       console.error('❌ שגיאת OpenAI:', openaiError)
       
-      if (openaiError.name === 'AbortError') {
+      if (openaiError.name === 'AbortError' || openaiError.message?.includes('aborted')) {
         return NextResponse.json(
-          { error: 'Request timeout - OpenAI לקח יותר מדי זמן' },
+          { error: 'Request timeout - OpenAI לקח יותר מדי זמן. נסה שוב.' },
           { status: 408 }
         )
       }
