@@ -68,7 +68,13 @@ export interface Notification {
 }
 
 export interface UserProfile {
+  id: string
   name: string
+  email: string
+  avatar: string
+  given_name?: string
+  family_name?: string
+  isGoogleConnected: boolean
   preferences: {
     theme: 'light' | 'dark'
     language: 'he' | 'en'
@@ -81,6 +87,9 @@ interface AppState {
   // User
   user: UserProfile
   setUser: (user: Partial<UserProfile>) => void
+  updateUserFromGoogle: (googleUser: any) => void
+  updateEventsFromGoogle: (googleEvents: any[]) => void
+  updateGmailData: (gmailData: any) => void
   
   // Tasks
   tasks: Task[]
@@ -126,7 +135,11 @@ export const useStore = create<AppState>()(
   subscribeWithSelector((set, get) => ({
     // Initial User Data
     user: {
-      name: 'אליאור',
+      id: '1',
+      name: 'משתמש',
+      email: 'user@example.com',
+      avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face',
+      isGoogleConnected: false,
       preferences: {
         theme: 'light',
         language: 'he',
@@ -478,7 +491,7 @@ export const useStore = create<AppState>()(
     chatMessages: [
       {
         id: 1,
-        text: 'שלום אליאור! אני העוזר החכם שלך. מה אפשר לעזור לך היום?',
+        text: 'שלום! אני העוזר החכם שלך. מה אפשר לעזור לך היום?',
         isUser: false,
         timestamp: new Date()
       }
@@ -490,13 +503,43 @@ export const useStore = create<AppState>()(
         timestamp: new Date()
       }]
     })),
-    clearChat: () => set({
+    clearChat: () => set((state) => ({
       chatMessages: [{
         id: 1,
-        text: 'שלום אליאור! אני העוזר החכם שלך. מה אפשר לעזור לך היום?',
+        text: `שלום ${state.user.name}! אני העוזר החכם שלך. מה אפשר לעזור לך היום?`,
         isUser: false,
         timestamp: new Date()
       }]
-    })
+    })),
+
+    // Google Data Management
+    updateUserFromGoogle: (googleUser: any) => set({
+      user: {
+        id: googleUser.id,
+        name: googleUser.name,
+        email: googleUser.email,
+        avatar: googleUser.picture || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face',
+        given_name: googleUser.given_name,
+        family_name: googleUser.family_name,
+        isGoogleConnected: true
+      }
+    }),
+
+    updateEventsFromGoogle: (googleEvents: any[]) => set({
+      events: googleEvents
+    }),
+
+    updateGmailData: (gmailData: any) => set((state) => ({
+      notifications: [
+        ...state.notifications.filter(n => !n.title.includes('אימייל')),
+        ...gmailData.messages.slice(0, 3).map((msg: any, index: number) => ({
+          id: Date.now() + index,
+          title: `אימייל חדש מ-${msg.from.split('<')[0].trim()}`,
+          message: msg.subject,
+          type: 'info' as const,
+          read: false
+        }))
+      ]
+    }))
   }))
 ) 

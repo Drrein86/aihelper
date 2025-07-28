@@ -4,6 +4,7 @@ import ChatBot from '@/components/ChatBot'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useStore } from '@/store/useStore'
 import { useState, useEffect } from 'react'
+import { useGoogleData } from '@/hooks/useGoogleData'
 import Calendar from '@/components/Calendar'
 import StockSummary from '@/components/StockSummary'
 import CalendarWidget from '@/components/CalendarWidget'
@@ -32,6 +33,9 @@ export default function Home() {
     notifications, 
     financial
   } = useStore()
+
+  // טעינת נתונים מגוגל
+  const { isLoading: googleLoading, error: googleError, isConnected } = useGoogleData()
 
   // Quick stats for calculations
   const pendingTasks = tasks.filter(t => !t.done).length
@@ -261,8 +265,12 @@ export default function Home() {
               <div>
                 <h1 className="text-sm font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {getTimeBasedGreeting()}, {user.name}
+                  {isConnected && <span className="text-green-500 mr-1">✓</span>}
                 </h1>
-                <p className="text-xs text-gray-600">העוזר החכם שלך</p>
+                <p className="text-xs text-gray-600">
+                  {isConnected ? 'מחובר לגוגל' : 'העוזר החכם שלך'}
+                  {googleLoading && <span className="mr-1">🔄</span>}
+                </p>
               </div>
           </div>
           
@@ -400,6 +408,30 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Google Error/Loading Notification */}
+      {googleError && (
+        <motion.div 
+          className="fixed top-16 right-4 z-50 p-3 bg-red-100 border border-red-300 rounded-lg text-red-700 text-sm"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 100 }}
+        >
+          ⚠️ שגיאה בטעינת נתונים מגוגל: {googleError}
+        </motion.div>
+      )}
+
+      {googleLoading && (
+        <motion.div 
+          className="fixed top-16 right-4 z-50 p-3 bg-blue-100 border border-blue-300 rounded-lg text-blue-700 text-sm flex items-center gap-2"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 100 }}
+        >
+          <div className="animate-spin w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full"></div>
+          טוען נתונים מגוגל...
+        </motion.div>
+      )}
 
       {/* Main Content - Responsive Layout */}
       <main className="h-[calc(100vh-3rem)] flex">
