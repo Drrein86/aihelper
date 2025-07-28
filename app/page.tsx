@@ -333,10 +333,10 @@ export default function Home() {
         </div>
 
         {/* Right Side - 3 Columns Features Layout (50% width) */}
-        <div className="w-1/2 h-full p-2 overflow-y-auto">
+        <div className="w-1/2 h-full p-2">
           <div className="grid grid-cols-3 gap-3 h-full">
             {/* Column 1 (Right) - 3 features */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 h-full">
               {features.slice(0, 3).map((feature, index) => (
                 <motion.div
                   key={feature.id}
@@ -350,7 +350,7 @@ export default function Home() {
                     bg-white rounded-lg shadow-sm border cursor-pointer
                     transition-all duration-300 hover:shadow-md
                     ${feature.borderColor} hover:border-opacity-100
-                    h-24 flex-shrink-0
+                    flex-1 min-h-0
                   `}
                 >
                   <div className="p-2 h-full flex flex-col">
@@ -418,7 +418,7 @@ export default function Home() {
             </div>
 
             {/* Column 2 (Middle) - 2 features */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 h-full">
               {features.slice(3, 5).map((feature, index) => (
                 <motion.div
                   key={feature.id}
@@ -432,7 +432,7 @@ export default function Home() {
                     bg-white rounded-lg shadow-sm border cursor-pointer
                     transition-all duration-300 hover:shadow-md
                     ${feature.borderColor} hover:border-opacity-100
-                    h-32 flex-shrink-0
+                    flex-1 min-h-0
                   `}
                 >
                   <div className="p-2 h-full flex flex-col">
@@ -500,7 +500,7 @@ export default function Home() {
             </div>
 
             {/* Column 3 (Left) - 3 features */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 h-full">
               {features.slice(5, 8).map((feature, index) => (
                 <motion.div
                   key={feature.id}
@@ -514,7 +514,7 @@ export default function Home() {
                     bg-white rounded-lg shadow-sm border cursor-pointer
                     transition-all duration-300 hover:shadow-md
                     ${feature.borderColor} hover:border-opacity-100
-                    h-24 flex-shrink-0
+                    flex-1 min-h-0
                   `}
                 >
                   <div className="p-2 h-full flex flex-col">
