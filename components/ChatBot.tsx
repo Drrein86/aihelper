@@ -11,9 +11,10 @@ import { Icons } from './ui/Icons'
 interface ChatBotProps {
   embedded?: boolean
   fullHeight?: boolean
+  noScroll?: boolean
 }
 
-export default function ChatBot({ embedded = false, fullHeight = false }: ChatBotProps) {
+export default function ChatBot({ embedded = false, fullHeight = false, noScroll = false }: ChatBotProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [currentMessage, setCurrentMessage] = useState('')
   const [isTyping, setIsTyping] = useState(false)
@@ -178,7 +179,7 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
           )}
 
         {/* Messages Area */}
-        <div className="flex-1 p-6 space-y-4 overflow-y-auto scrollbar-thin">
+        <div className={`flex-1 p-6 space-y-4 ${noScroll ? 'overflow-hidden' : 'overflow-y-auto scrollbar-thin'}`}>
           {/* Welcome Message */}
           {chatMessages.length <= 1 && (
             <motion.div 
@@ -252,25 +253,7 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <div className={`flex items-start gap-3 max-w-2xl ${message.isUser ? 'flex-row' : 'flex-row-reverse'}`}>
-                {/* Avatar */}
-                <motion.div 
-                  className={`
-                    w-10 h-10 rounded-2xl flex-center shadow-lg
-                    ${message.isUser 
-                      ? 'bg-gradient-to-br from-blue-500 to-cyan-500' 
-                      : 'bg-gradient-to-br from-purple-500 to-pink-500'
-                    }
-                  `}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  {message.isUser ? (
-                    <Icons.User className="text-white" size={16} />
-                  ) : (
-                    <Icons.Zap className="text-white" size={16} />
-                  )}
-                </motion.div>
-
-                {/* Message Bubble */}
+                {/* Message Bubble - No Icons */}
                 <div
                   className={`
                     px-6 py-4 rounded-2xl shadow-lg border backdrop-blur-sm
@@ -469,7 +452,7 @@ export default function ChatBot({ embedded = false, fullHeight = false }: ChatBo
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 h-80 overflow-y-auto p-4 space-y-3 scrollbar-thin">
+            <div className={`flex-1 h-80 ${noScroll ? 'overflow-hidden' : 'overflow-y-auto'} p-4 space-y-3 scrollbar-thin`}>
               {/* Welcome message for popup */}
               {chatMessages.length <= 1 && (
                 <motion.div 
