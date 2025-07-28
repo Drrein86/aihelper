@@ -8,7 +8,26 @@ const openai = new OpenAI({
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, userData, conversationHistory = [] } = await req.json()
+    let body
+    try {
+      body = await req.json()
+    } catch (jsonError) {
+      console.error('❌ שגיאה בפענוח JSON:', jsonError)
+      return NextResponse.json(
+        { error: 'Invalid JSON format' },
+        { status: 400 }
+      )
+    }
+
+    const { message, userData, conversationHistory = [] } = body
+
+    // ווליד צ'יה של הנתונים
+    if (!message || typeof message !== 'string') {
+      return NextResponse.json(
+        { error: 'Message is required and must be a string' },
+        { status: 400 }
+      )
+    }
 
     console.log('🚀 מתחבר ל-OpenAI עם gpt-3.5-turbo (המודל הזול ביותר)...')
 
@@ -25,13 +44,47 @@ export async function POST(req: NextRequest) {
 
     console.log('שולח ל-OpenAI:', { messageCount: messages.length })
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages,
-      max_tokens: 800,
-      temperature: 0.7,
-      stream: false
-    })
+    // בדיקה שיש API key
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('❌ OpenAI API key לא הוגדר')
+      return NextResponse.json(
+        { error: 'OpenAI API key not configured' },
+        { status: 500 }
+      )
+    }
+
+    let completion
+    try {
+      // timeout של 8 שניות (פחות מ-10 של Vercel)
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 8000)
+
+      completion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages,
+        max_tokens: 800,
+        temperature: 0.7,
+        stream: false
+      }, {
+        signal: controller.signal
+      })
+
+      clearTimeout(timeoutId)
+    } catch (openaiError: any) {
+      console.error('❌ שגיאת OpenAI:', openaiError)
+      
+      if (openaiError.name === 'AbortError') {
+        return NextResponse.json(
+          { error: 'Request timeout - OpenAI לקח יותר מדי זמן' },
+          { status: 408 }
+        )
+      }
+      
+      return NextResponse.json(
+        { error: 'OpenAI service temporarily unavailable' },
+        { status: 503 }
+      )
+    }
 
     const response = completion.choices[0]?.message?.content || 'מצטער, לא הצלחתי להבין. נסה שוב.'
     console.log('✅ תגובה מ-OpenAI התקבלה בהצלחה!')
