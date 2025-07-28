@@ -334,7 +334,7 @@ export default function Home() {
 
         {/* Right Side - Compact Pinterest Style Features (50% width) */}
         <div className="w-1/2 h-full p-2 overflow-y-auto">
-          <div className="columns-2 gap-2">
+          <div className="columns-2 gap-4">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.id}
@@ -345,15 +345,15 @@ export default function Home() {
                 whileTap={{ scale: 0.98 }}
                 onClick={() => openFeature(feature.id)}
                 className={`
-                  bg-white rounded-lg shadow-sm border cursor-pointer mb-2 break-inside-avoid
+                  bg-white rounded-lg shadow-sm border cursor-pointer mb-4 break-inside-avoid
                   transition-all duration-300 hover:shadow-md
                   ${feature.borderColor} hover:border-opacity-100
                   ${feature.height}
                 `}
               >
-                <div className="p-2 h-full flex flex-col">
+                <div className="p-3 h-full flex flex-col">
                   {/* Header */}
-                  <div className="flex items-center gap-1.5 mb-1">
+                  <div className="flex items-center gap-1.5 mb-2">
                     <div className={`w-5 h-5 bg-gradient-to-br ${feature.color} rounded flex-center shadow-sm`}>
                       <feature.icon className="text-white" size={10} />
                     </div>
@@ -364,7 +364,7 @@ export default function Home() {
                   </div>
 
                   {/* Content Preview */}
-                  <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-1.5`}>
+                  <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-2`}>
                     {feature.id === 'calendar' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
@@ -520,7 +520,7 @@ export default function Home() {
                   </div>
 
                   {/* Action Button */}
-                  <div className="mt-1">
+                  <div className="mt-2">
                     <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
                       פתח
                     </div>
