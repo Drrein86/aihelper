@@ -67,7 +67,14 @@ export default function Home() {
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-200',
-      textColor: 'text-blue-700'
+      textColor: 'text-blue-700',
+      height: 'h-48',
+      content: {
+        date: currentTime?.getDate() || '--',
+        month: currentTime?.toLocaleDateString('he-IL', { month: 'long' }),
+        events: todayEvents,
+        preview: events.slice(0, 2).map(e => ({ title: e.title, time: e.time }))
+      }
     },
     {
       id: 'stocks',
@@ -77,7 +84,17 @@ export default function Home() {
       color: 'from-green-500 to-green-600',
       bgColor: 'bg-green-50',
       borderColor: 'border-green-200',
-      textColor: 'text-green-700'
+      textColor: 'text-green-700',
+      height: 'h-56',
+      content: {
+        change: '+2.5%',
+        status: 'יום טוב בבורסה',
+        stocks: ['AAPL', 'MSFT', 'TSLA'],
+        preview: [
+          { symbol: 'AAPL', change: '+1.2%', price: '$150.25' },
+          { symbol: 'MSFT', change: '+0.8%', price: '$280.10' }
+        ]
+      }
     },
     {
       id: 'gmail',
@@ -87,7 +104,15 @@ export default function Home() {
       color: 'from-red-500 to-red-600',
       bgColor: 'bg-red-50',
       borderColor: 'border-red-200',
-      textColor: 'text-red-700'
+      textColor: 'text-red-700',
+      height: 'h-44',
+      content: {
+        unread: 5,
+        preview: [
+          { subject: 'פגישה חשובה', sender: 'מנהל הפרויקט', time: '10:30' },
+          { subject: 'עדכון מערכת', sender: 'מחלקת IT', time: '09:15' }
+        ]
+      }
     },
     {
       id: 'tasks',
@@ -97,7 +122,13 @@ export default function Home() {
       color: 'from-purple-500 to-purple-600',
       bgColor: 'bg-purple-50',
       borderColor: 'border-purple-200',
-      textColor: 'text-purple-700'
+      textColor: 'text-purple-700',
+      height: 'h-52',
+      content: {
+        pending: pendingTasks,
+        completed: tasks.filter(t => t.done).length,
+        preview: tasks.slice(0, 3).map(t => ({ text: t.text, done: t.done }))
+      }
     },
     {
       id: 'recommendations',
@@ -107,7 +138,13 @@ export default function Home() {
       color: 'from-yellow-500 to-yellow-600',
       bgColor: 'bg-yellow-50',
       borderColor: 'border-yellow-200',
-      textColor: 'text-yellow-700'
+      textColor: 'text-yellow-700',
+      height: 'h-40',
+      content: {
+        tip: 'התחל את היום עם תרגיל קצר של 10 דקות',
+        category: 'בריאות',
+        icon: '💪'
+      }
     },
     {
       id: 'challenges',
@@ -117,7 +154,17 @@ export default function Home() {
       color: 'from-orange-500 to-orange-600',
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-200',
-      textColor: 'text-orange-700'
+      textColor: 'text-orange-700',
+      height: 'h-60',
+      content: {
+        completed: 3,
+        total: 5,
+        challenges: [
+          { name: '10,000 צעדים', progress: 80, icon: '🚶' },
+          { name: '8 כוסות מים', progress: 60, icon: '💧' },
+          { name: 'קריאה 30 דקות', progress: 40, icon: '📚' }
+        ]
+      }
     },
     {
       id: 'inspiration',
@@ -127,7 +174,13 @@ export default function Home() {
       color: 'from-indigo-500 to-indigo-600',
       bgColor: 'bg-indigo-50',
       borderColor: 'border-indigo-200',
-      textColor: 'text-indigo-700'
+      textColor: 'text-indigo-700',
+      height: 'h-36',
+      content: {
+        quote: 'הדרך הטובה ביותר לחזות את העתיד היא ליצור אותו',
+        author: 'פיטר דרוקר',
+        category: 'מוטיבציה'
+      }
     },
     {
       id: 'notifications',
@@ -137,7 +190,12 @@ export default function Home() {
       color: 'from-pink-500 to-pink-600',
       bgColor: 'bg-pink-50',
       borderColor: 'border-pink-200',
-      textColor: 'text-pink-700'
+      textColor: 'text-pink-700',
+      height: 'h-48',
+      content: {
+        unread: unreadNotifications,
+        preview: notifications.slice(0, 2).map(n => ({ title: n.title, message: n.message }))
+      }
     }
   ]
 
@@ -247,86 +305,250 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Content - Compact */}
-      <main className="h-[calc(100vh-4rem)] container mx-auto px-6 py-4">
-        <div className="h-full flex flex-col">
-          {/* AI Assistant Section - Compact */}
+      {/* Main Content - Split Layout */}
+      <main className="h-[calc(100vh-4rem)] flex">
+        {/* Left Side - AI Chat (50% width) */}
+        <div className="w-1/2 h-full p-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-lg border border-gray-200 mb-4 overflow-hidden flex-shrink-0"
-            style={{ height: '200px' }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="bg-white rounded-3xl shadow-2xl border border-gray-200 h-full overflow-hidden"
           >
-            <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-purple-50">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex-center shadow-lg">
-                  <Icons.Message className="text-white" size={18} />
+            {/* Premium Chat Header */}
+            <div className="p-6 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex-center shadow-lg">
+                  <Icons.Message className="text-white" size={24} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <h2 className="text-2xl font-bold text-white">
                     עוזר חכם
                   </h2>
-                  <p className="text-xs text-gray-600">שאל אותי כל שאלה על כל הפיצ'רים</p>
+                  <p className="text-white/80">שאל אותי כל שאלה על כל הפיצ'רים</p>
                 </div>
               </div>
             </div>
-            <div className="h-[calc(200px-4rem)]">
+            
+            {/* Chat Content */}
+            <div className="h-[calc(100%-5rem)]">
               <ChatBot embedded={true} fullHeight={true} />
             </div>
           </motion.div>
+        </div>
 
-          {/* Features Grid - Compact */}
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3 flex-1">
+        {/* Right Side - Pinterest Style Features (50% width) */}
+        <div className="w-1/2 h-full p-4 overflow-y-auto">
+          <div className="columns-2 gap-4">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.02, y: -2 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -5 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => openFeature(feature.id)}
                 className={`
-                  bg-white rounded-xl shadow-md border cursor-pointer
-                  transition-all duration-300 hover:shadow-lg
+                  bg-white rounded-2xl shadow-lg border-2 cursor-pointer mb-4 break-inside-avoid
+                  transition-all duration-300 hover:shadow-2xl
                   ${feature.borderColor} hover:border-opacity-100
-                  flex flex-col justify-center items-center p-3
+                  ${feature.height}
                 `}
               >
-                {/* Icon */}
-                <div className={`w-10 h-10 bg-gradient-to-br ${feature.color} rounded-lg flex-center shadow-md mb-2`}>
-                  <feature.icon className="text-white" size={20} />
-                </div>
-                
-                {/* Title */}
-                <h3 className="text-xs font-bold text-gray-900 text-center mb-1">{feature.title}</h3>
-                
-                {/* Quick Info */}
-                <div className="text-center">
-                  {feature.id === 'calendar' && (
-                    <div className="text-lg font-bold text-gray-900">{currentTime?.getDate() || '--'}</div>
-                  )}
-                  {feature.id === 'stocks' && (
-                    <div className="text-sm font-bold text-green-600">+2.5%</div>
-                  )}
-                  {feature.id === 'gmail' && (
-                    <div className="text-sm font-bold text-gray-900">5</div>
-                  )}
-                  {feature.id === 'tasks' && (
-                    <div className="text-sm font-bold text-gray-900">{pendingTasks}</div>
-                  )}
-                  {feature.id === 'recommendations' && (
-                    <div className="text-xs text-gray-600">💡</div>
-                  )}
-                  {feature.id === 'challenges' && (
-                    <div className="text-sm font-bold text-gray-900">3/5</div>
-                  )}
-                  {feature.id === 'inspiration' && (
-                    <div className="text-xs text-gray-600">✨</div>
-                  )}
-                  {feature.id === 'notifications' && (
-                    <div className="text-sm font-bold text-gray-900">{unreadNotifications}</div>
-                  )}
+                <div className="p-4 h-full flex flex-col">
+                  {/* Header */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-10 h-10 bg-gradient-to-br ${feature.color} rounded-xl flex-center shadow-lg`}>
+                      <feature.icon className="text-white" size={20} />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-bold text-gray-900">{feature.title}</h3>
+                      <p className="text-xs text-gray-600">{feature.description}</p>
+                    </div>
+                  </div>
+
+                  {/* Content Preview */}
+                  <div className={`flex-1 ${feature.bgColor} rounded-xl border ${feature.borderColor} p-3`}>
+                    {feature.id === 'calendar' && (
+                      <div className="h-full flex flex-col justify-between">
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-gray-900 mb-1">
+                            {feature.content.date}
+                          </div>
+                          <div className="text-xs text-gray-600 mb-2">
+                            {feature.content.month}
+                          </div>
+                          <div className="text-xs text-gray-500">
+                            {feature.content.events} אירועים היום
+                          </div>
+                        </div>
+                        {feature.content.preview.length > 0 && (
+                          <div className="space-y-1 mt-2">
+                            {feature.content.preview.map((event, idx) => (
+                              <div key={idx} className="flex items-center gap-2 text-xs">
+                                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                <span className="text-gray-700 truncate">{event.title}</span>
+                                <span className="text-gray-500 text-xs">{event.time}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {feature.id === 'stocks' && (
+                      <div className="h-full flex flex-col justify-between">
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-green-600 mb-1">
+                            {feature.content.change}
+                          </div>
+                          <div className="text-xs text-gray-600 mb-2">
+                            {feature.content.status}
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          {feature.content.preview.map((stock, idx) => (
+                            <div key={idx} className="flex items-center justify-between text-xs">
+                              <span className="font-semibold text-gray-700">{stock.symbol}</span>
+                              <span className="text-green-600">{stock.change}</span>
+                              <span className="text-gray-500">{stock.price}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {feature.id === 'gmail' && (
+                      <div className="h-full flex flex-col justify-between">
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-gray-900 mb-1">
+                            {feature.content.unread}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            הודעות חדשות
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          {feature.content.preview.map((email, idx) => (
+                            <div key={idx} className="text-xs">
+                              <div className="font-semibold text-gray-700 truncate">{email.subject}</div>
+                              <div className="text-gray-500 text-xs">{email.sender} • {email.time}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {feature.id === 'tasks' && (
+                      <div className="h-full flex flex-col justify-between">
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-gray-900 mb-1">
+                            {feature.content.pending}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            משימות פתוחות
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          {feature.content.preview.map((task, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-xs">
+                              <div className={`w-3 h-3 rounded-full border flex-center ${
+                                task.done ? 'bg-green-500 border-green-500' : 'border-gray-300'
+                              }`}>
+                                {task.done && <Icons.Check className="text-white" size={8} />}
+                              </div>
+                              <span className={`flex-1 truncate ${task.done ? 'line-through text-gray-500' : 'text-gray-700'}`}>
+                                {task.text}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {feature.id === 'recommendations' && (
+                      <div className="h-full flex flex-col justify-center text-center">
+                        <div className="text-2xl mb-2">{feature.content.icon}</div>
+                        <div className="text-sm text-gray-900 mb-2">
+                          {feature.content.tip}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {feature.content.category}
+                        </div>
+                      </div>
+                    )}
+
+                    {feature.id === 'challenges' && (
+                      <div className="h-full flex flex-col justify-between">
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-gray-900 mb-1">
+                            {feature.content.completed}/{feature.content.total}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            אתגרים הושלמו
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          {feature.content.challenges.map((challenge, idx) => (
+                            <div key={idx} className="text-xs">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span>{challenge.icon}</span>
+                                <span className="font-semibold text-gray-700">{challenge.name}</span>
+                              </div>
+                              <div className="w-full bg-gray-200 rounded-full h-1">
+                                <div 
+                                  className="bg-orange-500 h-1 rounded-full" 
+                                  style={{ width: `${challenge.progress}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {feature.id === 'inspiration' && (
+                      <div className="h-full flex flex-col justify-center text-center">
+                        <div className="text-lg text-gray-900 mb-2 italic">
+                          "{feature.content.quote}"
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          {feature.content.author}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {feature.content.category}
+                        </div>
+                      </div>
+                    )}
+
+                    {feature.id === 'notifications' && (
+                      <div className="h-full flex flex-col justify-between">
+                        <div className="text-center">
+                          <div className="text-xl font-bold text-gray-900 mb-1">
+                            {feature.content.unread}
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            התראות חדשות
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          {feature.content.preview.map((notification, idx) => (
+                            <div key={idx} className="text-xs">
+                              <div className="font-semibold text-gray-700 truncate">{notification.title}</div>
+                              <div className="text-gray-500 truncate">{notification.message}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="mt-3">
+                    <div className={`w-full py-2 px-3 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded-lg text-center`}>
+                      פתח {feature.title}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
