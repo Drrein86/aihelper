@@ -15,6 +15,7 @@ import DailyMenu from '@/components/DailyMenu'
 import GmailWidget from '@/components/GmailWidget'
 import GmailCalendarIntegration from '@/components/GmailCalendarIntegration'
 import GoogleAuthButton from '@/components/GoogleAuthButton'
+import { Icons } from '@/components/ui/Icons'
 
 export default function Home() {
   const [currentTime, setCurrentTime] = useState<Date | null>(null)
@@ -132,403 +133,484 @@ export default function Home() {
     }
   }
 
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex-center" style={{ background: 'linear-gradient(to bottom right, var(--color-background), var(--color-background-secondary), var(--color-background-tertiary))' }}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex-center flex-col gap-6"
+        >
+          <div className="animate-glow">
+            <Icons.Zap className="text-white" size={64} />
+          </div>
+          <div className="text-gradient text-2xl font-bold">טוען עוזר חכם...</div>
+                                     <div className="w-48 h-1 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--color-surface)' }}>
+            <motion.div
+                              className="h-full rounded-full"
+                style={{ background: 'linear-gradient(to right, var(--color-primary), var(--color-primary-light))' }}
+              initial={{ x: "-100%" }}
+              animate={{ x: "100%" }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </div>
+        </motion.div>
+      </div>
+    )
+  }
+
   return (
-    <div className="h-screen w-screen bg-white overflow-hidden">
-      {/* Top Header Bar */}
-      <motion.header 
-        className="bg-black text-white px-2 md:px-3 lg:px-3 py-1 md:py-2 lg:py-1.5 flex items-center justify-between border-b-2 border-gray-200"
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="flex items-center space-x-2 md:space-x-3 lg:space-x-3">
-          {/* Mobile Menu Buttons */}
-          <div className="flex lg:hidden space-x-2">
-            <button 
-              onClick={() => setShowLeftSidebar(!showLeftSidebar)}
-              className="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center text-sm font-bold"
-            >
-              💰
-            </button>
-            <button 
-              onClick={() => setShowRightSidebar(!showRightSidebar)}
-              className="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center text-sm font-bold"
-            >
-              📋
-            </button>
-          </div>
-          <motion.div 
-            className="w-8 h-8 md:w-9 md:h-9 lg:w-7 lg:h-7 bg-white text-black rounded-full flex items-center justify-center text-sm md:text-base lg:text-sm font-bold animate-float"
-            whileHover={{ scale: 1.1 }}
-          >
-            🤖
-          </motion.div>
-          <div>
-            <h1 className="text-sm md:text-base lg:text-sm font-bold">
-              {getTimeBasedGreeting()}, {user.name}! 
-            </h1>
-            <p className="text-xs md:text-sm lg:text-xs text-white/80 hidden md:block">העוזר החכם שלך מוכן לעזור</p>
-          </div>
+    <div className="min-h-screen overflow-hidden relative">
+      {/* Animated Background */}
+      <div className="fixed inset-0" style={{ background: 'linear-gradient(to bottom right, var(--color-background), var(--color-background-secondary), var(--color-background-tertiary))' }}>
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-500"></div>
         </div>
-        <div className="flex items-center space-x-2 md:space-x-3 lg:space-x-2">
-          {/* Current Time */}
-          <div className="bg-white text-black px-2 md:px-3 lg:px-2 py-1 md:py-1.5 lg:py-0.5 rounded-full font-bold text-xs md:text-sm lg:text-xs">
-            {mounted && currentTime ? currentTime.toLocaleTimeString('he-IL', { 
-              hour: '2-digit', 
-              minute: '2-digit',
-              hour12: false 
-            }) : '--:--'}
-          </div>
-          {/* Status Indicators - Hidden on very small screens */}
-          <div className="hidden sm:flex space-x-2 lg:space-x-1">
-            {pendingTasks > 0 && (
-              <div className="bg-red-500 text-white px-2 md:px-3 lg:px-1.5 py-1 md:py-1.5 lg:py-0.5 rounded-full font-bold text-xs md:text-sm lg:text-xs">
-                {pendingTasks} משימות
+      </div>
+
+      {/* Modern Header */}
+      <motion.header 
+        className="relative z-50 glass border-b border-white/10 backdrop-blur-xl"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, type: "spring" }}
+      >
+        <div className="container py-4">
+          <div className="flex-between">
+            {/* Left Section */}
+            <div className="flex items-center gap-4">
+              {/* Mobile Menu Toggle */}
+              <div className="flex lg:hidden gap-2">
+                <motion.button 
+                  onClick={() => setShowLeftSidebar(!showLeftSidebar)}
+                  className="btn-ghost p-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Icons.TrendingUp size={20} />
+                </motion.button>
+                <motion.button 
+                  onClick={() => setShowRightSidebar(!showRightSidebar)}
+                  className="btn-ghost p-2"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Icons.Calendar size={20} />
+                </motion.button>
               </div>
-            )}
-            {unreadNotifications > 0 && (
-              <div className="bg-yellow-500 text-black px-2 md:px-3 lg:px-1.5 py-1 md:py-1.5 lg:py-0.5 rounded-full font-bold text-xs md:text-sm lg:text-xs">
-                {unreadNotifications} התראות
+
+              {/* Logo & Brand */}
+              <motion.div 
+                className="flex items-center gap-3"
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="w-10 h-10 rounded-xl flex-center shadow-lg animate-glow" style={{ background: 'linear-gradient(to bottom right, var(--color-primary), var(--color-primary-light))' }}>
+                  <Icons.Zap className="text-white" size={20} />
+                </div>
+                <div>
+                  <h1 className="text-xl font-black text-gradient leading-tight">
+                    {getTimeBasedGreeting()}, {user.name}
+                  </h1>
+                  <p className="text-sm text-secondary font-medium">העוזר החכם שלך מוכן לעזור</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Center Section */}
+            <div className="hidden md:flex items-center gap-4">
+              {/* Live Clock */}
+              <motion.div
+                className="glass-hover px-4 py-2 rounded-xl"
+                whileHover={{ scale: 1.02 }}
+              >
+                <div className="text-xl font-bold text-gradient">
+                  {currentTime?.toLocaleTimeString('he-IL', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: false 
+                  }) || '--:--'}
+                </div>
+                <div className="text-xs text-secondary text-center">
+                  {currentTime?.toLocaleDateString('he-IL', { weekday: 'short' })}
+                </div>
+              </motion.div>
+
+              {/* Quick Stats */}
+              <div className="flex gap-2">
+                {[
+                  { icon: Icons.Calendar, value: todayEvents, label: 'אירועים', color: 'text-blue-400' },
+                  { icon: Icons.Check, value: pendingTasks, label: 'משימות', color: 'text-green-400' },
+                  { icon: Icons.Bell, value: unreadNotifications, label: 'התראות', color: 'text-orange-400' }
+                ].map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="glass-hover px-3 py-2 rounded-lg flex items-center gap-2"
+                  >
+                    <stat.icon className={stat.color} size={16} />
+                    <div>
+                      <div className="text-sm font-bold text-primary">{stat.value}</div>
+                      <div className="text-xs text-secondary">{stat.label}</div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-            )}
-          </div>
-          
-          {/* Google Auth Button */}
-          <GoogleAuthButton className="hidden md:flex text-xs" />
-          
-          <div className="flex space-x-1">
-            <div className="w-2 h-2 lg:w-1.5 lg:h-1.5 bg-green-400 rounded-full animate-pulse"></div>
-            <div className="w-2 h-2 lg:w-1.5 lg:h-1.5 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-2 h-2 lg:w-1.5 lg:h-1.5 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+            </div>
+
+            {/* Right Section */}
+            <div className="flex items-center gap-3">
+              <GoogleAuthButton className="hidden md:flex" />
+              
+              {/* Status Indicator */}
+              <div className="flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-200"></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse delay-400"></div>
+              </div>
+            </div>
           </div>
         </div>
       </motion.header>
 
-      {/* Main Content Area */}
-      <div className="flex h-[calc(100vh-50px)] md:h-[calc(100vh-58px)] lg:h-[calc(100vh-52px)] relative">
-        {/* Left Sidebar - Financial & Quick Stats */}
-        <motion.div 
-          className={`${showLeftSidebar ? 'fixed inset-0 z-50 bg-black/50' : 'hidden'} lg:relative lg:flex lg:bg-transparent lg:z-auto`}
-          onClick={() => setShowLeftSidebar(false)}
-        >
-          <motion.div 
-            className={`${showLeftSidebar ? 'w-80' : leftSidebarExpanded ? 'w-96' : 'w-60'} md:${leftSidebarExpanded ? 'w-80' : 'w-52'} lg:${leftSidebarExpanded ? 'w-80' : 'w-52'} xl:${leftSidebarExpanded ? 'w-96' : 'w-60'} bg-gray-50 p-1 flex flex-col gap-1 overflow-y-auto border-l-2 border-black transition-all duration-300 ${
-              showLeftSidebar ? 'fixed left-0 top-0 h-full z-50' : 'hidden lg:block'
-            }`}
-            initial={{ x: -100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Control Buttons */}
-            <div className="absolute top-2 right-2 flex space-x-1">
-              <button 
-                onClick={() => setLeftSidebarExpanded(!leftSidebarExpanded)}
-                className="hidden lg:block w-6 h-6 bg-black/10 hover:bg-black/20 text-black rounded-full flex items-center justify-center text-xs transition-all duration-200"
-                title={leftSidebarExpanded ? 'קטן' : 'הגדל'}
+      {/* Main Layout */}
+      <div className="flex h-[calc(100vh-80px)] relative">
+        {/* Left Sidebar - Enhanced */}
+        <AnimatePresence>
+          {(showLeftSidebar || window.innerWidth >= 1024) && (
+            <motion.div 
+              className={`${showLeftSidebar ? 'fixed inset-0 z-40 lg:relative lg:inset-auto' : 'hidden lg:block'}`}
+              onClick={() => setShowLeftSidebar(false)}
+            >
+              <motion.div 
+                className={`
+                  ${leftSidebarExpanded ? 'w-96' : 'w-80'} 
+                  ${showLeftSidebar ? 'w-80 fixed left-0 top-0 h-full z-50' : ''}
+                  glass border-r border-white/10 p-6 flex flex-col gap-6 overflow-y-auto
+                  transition-all duration-300
+                `}
+                initial={{ x: -400, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -400, opacity: 0 }}
+                transition={{ type: "spring", damping: 25 }}
+                onClick={(e) => e.stopPropagation()}
               >
-                {leftSidebarExpanded ? '←' : '→'}
-              </button>
-              <button 
-                onClick={() => setShowLeftSidebar(false)}
-                className="lg:hidden w-8 h-8 bg-black text-white rounded-full flex items-center justify-center"
-              >
-                ×
-              </button>
-            </div>
+                {/* Sidebar Header */}
+                <div className="flex-between">
+                  <h2 className="text-lg font-bold text-gradient">ניתוח כספי</h2>
+                  <div className="flex gap-2">
+                    <motion.button 
+                      onClick={() => setLeftSidebarExpanded(!leftSidebarExpanded)}
+                      className="btn-ghost p-2 hidden lg:flex"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <Icons.ChevronRight 
+                        className={`transition-transform ${leftSidebarExpanded ? 'rotate-180' : ''}`}
+                        size={16}
+                      />
+                    </motion.button>
+                    <motion.button 
+                      onClick={() => setShowLeftSidebar(false)}
+                      className="btn-ghost p-2 lg:hidden"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <Icons.Close size={16} />
+                    </motion.button>
+                  </div>
+                </div>
 
-            {/* Stock Summary Widget */}
-            <div className="flex-1 min-h-0">
-              <StockSummary 
-                className="h-full" 
-                onOpenAdvisor={() => setShowStockAdvisor(true)}
-              />
-            </div>
+                {/* Widgets */}
+                <motion.div
+                  className="flex-1 space-y-6"
+                  layout
+                >
+                  <StockSummary 
+                    className="h-64" 
+                    onOpenAdvisor={() => setShowStockAdvisor(true)}
+                  />
+                  <CalendarWidget 
+                    className="h-48" 
+                    onOpenCalendar={() => setShowCalendar(true)}
+                  />
+                                     <InspirationQuotes 
+                     className="h-40" 
+                     onOpenDetails={(type) => console.log('Open inspiration:', type)}
+                   />
+                   <DailyChallenges 
+                     className="h-40" 
+                     onOpenDetails={(type) => console.log('Open challenges:', type)}
+                   />
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-            {/* Calendar Widget */}
-            <div className="flex-1 min-h-0">
-              <CalendarWidget 
-                className="h-full" 
-                onOpenCalendar={() => setShowCalendar(true)}
-              />
-            </div>
-
-            {/* Inspiration Quotes Widget */}
-            <div className="flex-1 min-h-0">
-              <InspirationQuotes 
-                className="h-full" 
-                onOpenDetails={(type) => console.log('Open inspiration:', type)}
-              />
-            </div>
-
-            {/* Daily Challenges Widget */}
-            <div className="flex-1 min-h-0">
-              <DailyChallenges 
-                className="h-full" 
-                onOpenDetails={(type) => console.log('Open challenges:', type)}
-              />
-            </div>
-          </motion.div>
-          </motion.div>
-
-        {/* Center Chat Area */}
+        {/* Center Content - Enhanced Chat */}
         <motion.div 
-          className="flex-1 p-2 md:p-3 lg:p-2 bg-gray-50"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          className="flex-1 relative"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="h-full max-w-3xl md:max-w-4xl lg:max-w-2xl xl:max-w-3xl mx-auto">
-            <ChatBot embedded={true} fullHeight={true} />
+          <div className="h-full p-6">
+            <div className="h-full max-w-4xl mx-auto">
+              <ChatBot embedded={true} fullHeight={true} />
+            </div>
           </div>
         </motion.div>
 
-        {/* Smart Quick Actions Float */}
+        {/* Enhanced Quick Actions Float */}
         <motion.div 
-          className="fixed bottom-4 left-4 z-40 lg:hidden"
+          className="fixed bottom-6 left-6 z-40 lg:hidden"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
         >
-          <div className="bg-gradient-to-r from-black to-gray-800 text-white rounded-full p-2 shadow-2xl">
-            <div className="flex space-x-2">
+          <div className="glass rounded-2xl p-3 shadow-2xl">
+            <div className="flex gap-3">
               {[
-                { icon: '📝', action: 'new-task', color: 'bg-blue-500' },
-                { icon: '📅', action: 'new-event', color: 'bg-green-500' },
-                { icon: '💰', action: 'update-finance', color: 'bg-yellow-500' },
-                { icon: '📊', action: 'reports', color: 'bg-purple-500' }
+                { icon: Icons.Plus, action: 'new-task', color: 'text-blue-400' },
+                { icon: Icons.Calendar, action: 'new-event', color: 'text-green-400' },
+                { icon: Icons.DollarSign, action: 'update-finance', color: 'text-yellow-400' },
+                { icon: Icons.TrendingUp, action: 'reports', color: 'text-purple-400' }
               ].map((action, index) => (
                 <motion.button
                   key={index}
                   onClick={() => handleQuickAction(action.action)}
-                  className={`w-10 h-10 ${action.color} rounded-full flex items-center justify-center text-lg hover:scale-110 transition-all duration-200 shadow-lg`}
+                  className="btn-primary w-12 h-12 rounded-xl flex-center shadow-lg"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.9 }}
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.3, delay: 0.1 * index }}
                 >
-                  {action.icon}
+                  <action.icon className={action.color} size={20} />
                 </motion.button>
               ))}
             </div>
           </div>
         </motion.div>
 
-        {/* Right Sidebar - Tasks & Events */}
-        <motion.div 
-          className={`${showRightSidebar ? 'fixed inset-0 z-50 bg-black/50' : 'hidden'} lg:relative lg:flex lg:bg-transparent lg:z-auto`}
-          onClick={() => setShowRightSidebar(false)}
-        >
-          <motion.div 
-            className={`${showRightSidebar ? 'w-80' : rightSidebarExpanded ? 'w-96' : 'w-60'} md:${rightSidebarExpanded ? 'w-80' : 'w-52'} lg:${rightSidebarExpanded ? 'w-80' : 'w-52'} xl:${rightSidebarExpanded ? 'w-96' : 'w-60'} bg-gray-50 p-1 flex flex-col gap-1 overflow-y-auto border-r-2 border-black transition-all duration-300 ${
-              showRightSidebar ? 'fixed right-0 top-0 h-full z-50' : 'hidden lg:block'
-            }`}
-            initial={{ x: 100, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Control Buttons */}
-            <div className="absolute top-2 left-2 flex space-x-1">
-              <button 
-                onClick={() => setRightSidebarExpanded(!rightSidebarExpanded)}
-                className="hidden lg:block w-6 h-6 bg-black/10 hover:bg-black/20 text-black rounded-full flex items-center justify-center text-xs transition-all duration-200"
-                title={rightSidebarExpanded ? 'קטן' : 'הגדל'}
-              >
-                {rightSidebarExpanded ? '→' : '←'}
-              </button>
-              <button 
-                onClick={() => setShowRightSidebar(false)}
-                className="lg:hidden w-8 h-8 bg-black text-white rounded-full flex items-center justify-center"
-              >
-                ×
-              </button>
-          </div>
-
-                        {/* Today's Tasks Card */}
-            <div className="flex-1 min-h-0">
-              <div className="bg-white rounded p-1 shadow-lg border-2 border-black h-full flex flex-col">
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-bold text-black text-xs flex items-center">
-                    ✅ משימות
-            </h3>
-                  <span className="text-xs bg-red-500 text-white px-1 py-0.5 rounded-full font-bold">
-                    {pendingTasks}
-                  </span>
-                </div>
-
-                {/* Tasks Preview */}
-                <div className="flex-1 mb-1 overflow-hidden">
-                  {tasks.filter(t => !t.done).slice(0, 2).map((task, index) => (
-                    <div 
-                      key={task.id} 
-                      className="flex items-center space-x-1 p-0.5 bg-gray-50 rounded mb-0.5 text-xs"
-                    >
-                      <div className={`w-1.5 h-1.5 rounded-full ${
-                    task.priority === 'high' ? 'bg-red-500' : 
-                    task.priority === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
-                  }`} />
-                      <span className="flex-1 truncate">{task.text}</span>
-                </div>
-              ))}
-              {pendingTasks === 0 && (
-                    <div className="text-center py-1 bg-green-50 rounded">
-                      <div className="text-xs">🎉</div>
-                      <p className="text-green-600 font-bold text-xs">הושלם!</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Progress Bar */}
-                <div className="bg-gray-200 rounded-full h-1 mb-1">
-                  <div 
-                    className="bg-green-500 rounded-full h-1 transition-all duration-300"
-                    style={{ width: `${tasks.length > 0 ? ((tasks.filter(t => t.done).length / tasks.length) * 100) : 0}%` }}
-                  />
-                </div>
-
-                {/* Expand Button */}
-                <button className="w-full py-1 bg-black text-white text-xs rounded hover:bg-gray-800 transition-all duration-200 font-bold">
-                  🔍 משימות
-                </button>
-              </div>
-            </div>
-
-                                    {/* Daily Recommendation Widget */}
-            <div className="flex-1 min-h-0">
-              <DailyRecommendation 
-                className="h-full" 
-                onOpenDetails={(type) => console.log('Open recommendation:', type)}
-              />
-          </div>
-
-                        {/* Today's Events Card */}
-            <div className="flex-1 min-h-0">
-              <div className="bg-white rounded p-1 shadow-lg border-2 border-black h-full flex flex-col">
-                <div className="flex items-center justify-between mb-1">
-                  <h3 className="font-bold text-black text-xs flex items-center">
-                    📅 אירועים
-            </h3>
-                  <span className="text-xs bg-purple-500 text-white px-1 py-0.5 rounded-full font-bold">
-                    {todayEvents}
-                  </span>
-                </div>
-
-                {/* Events Preview */}
-                <div className="flex-1 mb-1 overflow-hidden">
-              {events.filter(e => {
-                const eventDate = new Date(e.date)
-                return eventDate.toDateString() === new Date().toDateString()
-                  }).slice(0, 2).map((event, index) => (
-                    <div 
-                      key={event.id} 
-                      className="flex items-center space-x-1 p-0.5 bg-purple-50 rounded mb-0.5"
-                    >
-                      <div className="bg-purple-500 text-white px-1 py-0.5 rounded text-xs font-bold min-w-[25px] text-center">
-                        {event.time.substring(0,2)}
-                      </div>
-                      <div className="flex-1">
-                        <span className="text-gray-800 font-medium text-xs truncate block">
-                          {event.title}
-                        </span>
-                      </div>
-                      <span className="text-xs">
-                        {event.type === 'meeting' ? '👥' : 
-                         event.type === 'task' ? '✅' : 
-                         event.type === 'payment' ? '💸' : '🎯'}
-                      </span>
-                </div>
-              ))}
-              {todayEvents === 0 && (
-                    <div className="text-center py-1 bg-purple-50 rounded">
-                      <div className="text-xs">📅</div>
-                      <p className="text-purple-600 font-bold text-xs">פנוי! 🏖️</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Expand Button */}
-                <button className="w-full py-1 bg-black text-white text-xs rounded hover:bg-gray-800 transition-all duration-200 font-bold">
-                  🔍 אירועים
-                </button>
-              </div>
-            </div>
-
-                        {/* Gmail Widget */}
-            <div className="flex-1 min-h-0">
-              <GmailWidget 
-                className="h-full" 
-                onOpenDetails={(type) => console.log('Open Gmail:', type)}
-              />
-            </div>
-
-            {/* Gmail Calendar Integration Widget */}
-            <div className="flex-1 min-h-0">
-              <GmailCalendarIntegration 
-                className="h-full" 
-                onEventCreated={() => {
-                  console.log('Event created from Gmail!')
-                  // כאן אפשר להוסיף רענון לוח השנה או הצגת הודעה
-                }}
-              />
-            </div>
-          </motion.div>
-        </motion.div>
-          </div>
-
-      {/* Add Event Modal */}
-      <AnimatePresence>
-        {showAddEvent && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        {/* Right Sidebar - Enhanced */}
+        <AnimatePresence>
+          {(showRightSidebar || window.innerWidth >= 1024) && (
             <motion.div 
-              className="bg-white rounded-xl p-6 w-96 max-w-[90vw] shadow-2xl"
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
+              className={`${showRightSidebar ? 'fixed inset-0 z-40 lg:relative lg:inset-auto' : 'hidden lg:block'}`}
+              onClick={() => setShowRightSidebar(false)}
             >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-gray-800 flex items-center">
-                  📅 אירוע חדש
-            </h3>
-                <button
+              <motion.div 
+                className={`
+                  ${rightSidebarExpanded ? 'w-96' : 'w-80'} 
+                  ${showRightSidebar ? 'w-80 fixed right-0 top-0 h-full z-50' : ''}
+                  glass border-l border-white/10 p-6 flex flex-col gap-6 overflow-y-auto
+                  transition-all duration-300
+                `}
+                initial={{ x: 400, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 400, opacity: 0 }}
+                transition={{ type: "spring", damping: 25 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Sidebar Header */}
+                <div className="flex-between">
+                  <h2 className="text-lg font-bold text-gradient">משימות ואירועים</h2>
+                  <div className="flex gap-2">
+                    <motion.button 
+                      onClick={() => setRightSidebarExpanded(!rightSidebarExpanded)}
+                      className="btn-ghost p-2 hidden lg:flex"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <Icons.ChevronRight 
+                        className={`transition-transform ${rightSidebarExpanded ? '' : 'rotate-180'}`}
+                        size={16}
+                      />
+                    </motion.button>
+                    <motion.button 
+                      onClick={() => setShowRightSidebar(false)}
+                      className="btn-ghost p-2 lg:hidden"
+                      whileHover={{ scale: 1.1 }}
+                    >
+                      <Icons.Close size={16} />
+                    </motion.button>
+                  </div>
+                </div>
+
+                {/* Enhanced Tasks Card */}
+                <motion.div className="card space-y-4">
+                  <div className="flex-between">
+                    <h3 className="font-bold text-primary flex items-center gap-2">
+                      <Icons.Check size={16} />
+                      משימות היום
+                    </h3>
+                    <span className="btn-secondary px-2 py-1 text-xs font-bold">
+                      {pendingTasks}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 max-h-32 overflow-y-auto">
+                    {tasks.filter(t => !t.done).slice(0, 3).map((task, index) => (
+                      <motion.div 
+                        key={task.id}
+                        className="glass-hover p-3 rounded-lg flex items-center gap-3"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <div className={`w-2 h-2 rounded-full ${
+                          task.priority === 'high' ? 'bg-red-400' : 
+                          task.priority === 'medium' ? 'bg-yellow-400' : 'bg-green-400'
+                        }`} />
+                        <span className="flex-1 text-sm truncate">{task.text}</span>
+                      </motion.div>
+                    ))}
+                    {pendingTasks === 0 && (
+                      <div className="text-center py-4 glass rounded-lg">
+                        <Icons.Check className="text-green-400 mx-auto mb-2" size={24} />
+                        <p className="text-green-400 font-bold text-sm">כל המשימות הושלמו!</p>
+                      </div>
+                    )}
+                  </div>
+
+                                     <div className="rounded-full h-2 overflow-hidden" style={{ backgroundColor: 'var(--color-surface)' }}>
+                    <motion.div 
+                      className="bg-gradient-to-r from-green-400 to-emerald-400 h-full rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ 
+                        width: `${tasks.length > 0 ? ((tasks.filter(t => t.done).length / tasks.length) * 100) : 0}%` 
+                      }}
+                      transition={{ duration: 1, delay: 0.5 }}
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Enhanced Events Card */}
+                <motion.div className="card space-y-4">
+                  <div className="flex-between">
+                    <h3 className="font-bold text-primary flex items-center gap-2">
+                      <Icons.Calendar size={16} />
+                      אירועים היום
+                    </h3>
+                    <span className="btn-secondary px-2 py-1 text-xs font-bold">
+                      {todayEvents}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 max-h-32 overflow-y-auto">
+                    {events.filter(e => {
+                      const eventDate = new Date(e.date)
+                      return eventDate.toDateString() === new Date().toDateString()
+                    }).slice(0, 3).map((event, index) => (
+                      <motion.div 
+                        key={event.id}
+                        className="glass-hover p-3 rounded-lg flex items-center gap-3"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                      >
+                        <div className="btn-primary px-2 py-1 text-xs font-bold rounded-lg min-w-[40px] text-center">
+                          {event.time.substring(0,5)}
+                        </div>
+                        <div className="flex-1">
+                          <span className="text-sm font-medium block truncate">{event.title}</span>
+                        </div>
+                        <span className="text-lg">
+                          {event.type === 'meeting' ? '👥' : 
+                           event.type === 'task' ? '✅' : 
+                           event.type === 'payment' ? '💸' : '🎯'}
+                        </span>
+                      </motion.div>
+                    ))}
+                    {todayEvents === 0 && (
+                      <div className="text-center py-4 glass rounded-lg">
+                        <Icons.Calendar className="text-blue-400 mx-auto mb-2" size={24} />
+                        <p className="text-blue-400 font-bold text-sm">יום פנוי!</p>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+
+                                 {/* Daily Recommendation */}
+                 <DailyRecommendation 
+                   className="h-48" 
+                   onOpenDetails={(type) => console.log('Open recommendation:', type)}
+                 />
+
+                                 {/* Gmail & Calendar Integration */}
+                 <GmailWidget />
+                 <GmailCalendarIntegration />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Enhanced Modals */}
+      <AnimatePresence>
+        {/* Add Event Modal */}
+        {showAddEvent && (
+          <motion.div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowAddEvent(false)}
+          >
+            <motion.div 
+              className="glass w-full max-w-md rounded-2xl p-6 border border-white/20"
+              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              transition={{ type: "spring", damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex-between mb-6">
+                <h3 className="text-xl font-bold text-gradient flex items-center gap-2">
+                  <Icons.Calendar size={20} />
+                  אירוע חדש
+                </h3>
+                <motion.button
                   onClick={() => setShowAddEvent(false)}
-                  className="text-gray-400 hover:text-gray-600 text-xl"
+                  className="btn-ghost p-2"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  ×
-                </button>
+                  <Icons.Close size={16} />
+                </motion.button>
               </div>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">כותרת האירוע</label>
+                  <label className="block text-sm font-medium text-secondary mb-2">כותרת האירוע</label>
                   <input
                     type="text"
                     value={newEvent.title}
                     onChange={(e) => setNewEvent(prev => ({ ...prev, title: e.target.value }))}
                     placeholder="פגישה עם לקוח, יום הולדת..."
-                    className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    className="input"
                   />
                 </div>
                 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">שעה</label>
+                    <label className="block text-sm font-medium text-secondary mb-2">שעה</label>
                     <input
                       type="time"
                       value={newEvent.time}
                       onChange={(e) => setNewEvent(prev => ({ ...prev, time: e.target.value }))}
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                      className="input"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">סוג</label>
+                    <label className="block text-sm font-medium text-secondary mb-2">סוג</label>
                     <select
                       value={newEvent.type}
                       onChange={(e) => setNewEvent(prev => ({ ...prev, type: e.target.value as any }))}
-                      className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                      className="input"
                     >
                       <option value="meeting">👥 פגישה</option>
                       <option value="task">✅ משימה</option>
@@ -539,13 +621,13 @@ export default function Home() {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">מיקום</label>
+                  <label className="block text-sm font-medium text-secondary mb-2">מיקום</label>
                   <input
                     type="text"
                     value={newEvent.location}
                     onChange={(e) => setNewEvent(prev => ({ ...prev, location: e.target.value }))}
                     placeholder="משרד, בית קפה, זום..."
-                    className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                    className="input"
                   />
                 </div>
               </div>
@@ -554,18 +636,19 @@ export default function Home() {
                 <motion.button
                   onClick={handleAddEvent}
                   disabled={!newEvent.title.trim() || !newEvent.time.trim()}
-                  className="flex-1 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                  className="btn-primary flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  ✅ הוסף אירוע
+                  <Icons.Plus size={16} />
+                  הוסף אירוע
                 </motion.button>
                 <motion.button
                   onClick={() => {
                     setShowAddEvent(false)
                     setNewEvent({ title: '', time: '', location: '', type: 'meeting' })
                   }}
-                  className="flex-1 py-3 bg-gray-100 text-gray-600 rounded-lg font-bold hover:bg-gray-200 transition-all duration-300"
+                  className="btn-secondary flex-1"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -573,63 +656,83 @@ export default function Home() {
                 </motion.button>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
-      </AnimatePresence>
 
-      {/* Financial Advisor Modal */}
-      <AnimatePresence>
+        {/* Stock Advisor Modal */}
         {showStockAdvisor && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <motion.div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowStockAdvisor(false)}
+          >
             <motion.div 
-              className="bg-white rounded-2xl w-full max-w-6xl h-full max-h-[90vh] shadow-2xl overflow-hidden border border-gray-200"
+              className="glass w-full max-w-6xl h-full max-h-[90vh] rounded-2xl overflow-hidden border border-white/20"
               initial={{ scale: 0.8, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 50 }}
-              transition={{ duration: 0.3 }}
+              transition={{ type: "spring", damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-600 to-blue-600 text-white">
-                <h2 className="text-2xl font-bold">🧠 יועץ פיננסי מתקדם</h2>
-                <button
+              <div className="flex-between p-6 border-b border-white/10">
+                <h2 className="text-2xl font-bold text-gradient flex items-center gap-3">
+                  <Icons.TrendingUp size={24} />
+                  יועץ פיננסי מתקדם
+                </h2>
+                <motion.button
                   onClick={() => setShowStockAdvisor(false)}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200"
+                  className="btn-ghost p-2"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  ❌
-                </button>
+                  <Icons.Close size={20} />
+                </motion.button>
               </div>
               <div className="h-[calc(100%-5rem)] overflow-auto">
                 <StockPortfolio />
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
-      </AnimatePresence>
 
-      {/* Calendar Modal */}
-      <AnimatePresence>
+        {/* Calendar Modal */}
         {showCalendar && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <motion.div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowCalendar(false)}
+          >
             <motion.div 
-              className="bg-white rounded-2xl w-full max-w-7xl h-full max-h-[90vh] shadow-2xl overflow-hidden border border-gray-200"
+              className="glass w-full max-w-7xl h-full max-h-[90vh] rounded-2xl overflow-hidden border border-white/20"
               initial={{ scale: 0.8, opacity: 0, y: 50 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: 50 }}
-              transition={{ duration: 0.3 }}
+              transition={{ type: "spring", damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-                <h2 className="text-2xl font-bold">📅 לוח השנה החכם והצבעוני</h2>
-                <button
+              <div className="flex-between p-6 border-b border-white/10">
+                <h2 className="text-2xl font-bold text-gradient flex items-center gap-3">
+                  <Icons.Calendar size={24} />
+                  לוח השנה החכם
+                </h2>
+                <motion.button
                   onClick={() => setShowCalendar(false)}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-all duration-200"
+                  className="btn-ghost p-2"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                 >
-                  ❌
-                </button>
+                  <Icons.Close size={20} />
+                </motion.button>
               </div>
               <div className="h-[calc(100%-5rem)]">
                 <Calendar compact={false} />
-            </div>
+              </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
