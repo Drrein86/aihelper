@@ -23,6 +23,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const [activeFeature, setActiveFeature] = useState<string | null>(null)
   const [showFeatureModal, setShowFeatureModal] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const { 
     user, 
@@ -250,7 +251,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Center Stats */}
+            {/* Center Stats - Hidden on mobile */}
             <div className="hidden lg:flex items-center gap-2">
               <motion.div 
                 className="flex items-center gap-1 px-2 py-1 bg-blue-50 rounded-md border border-blue-200"
@@ -280,9 +281,19 @@ export default function Home() {
 
             {/* Right Section */}
             <div className="flex items-center gap-2">
+              {/* Mobile Menu Button - Only visible on mobile */}
+              <motion.button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="lg:hidden p-2 rounded-md bg-gray-100 hover:bg-gray-200 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Icons.Menu className="text-gray-600" size={16} />
+              </motion.button>
+
               {/* Live Clock */}
               <motion.div 
-                className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-md border border-gray-200"
+                className="hidden sm:flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-md border border-gray-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
@@ -301,10 +312,84 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Content - Compact Split Layout */}
+      {/* Mobile Side Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25 }}
+              className="w-80 h-full bg-white shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Mobile Menu Header */}
+              <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex-center">
+                      <Icons.Zap className="text-white" size={16} />
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-bold text-white">תפריט</h2>
+                      <p className="text-white/80 text-sm">כל הפיצ'רים</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
+                  >
+                    <Icons.Close className="text-white" size={16} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Mobile Menu Items */}
+              <div className="p-4 space-y-3 h-[calc(100%-5rem)] overflow-y-auto">
+                {features.map((feature, index) => (
+                  <motion.button
+                    key={feature.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => {
+                      openFeature(feature.id)
+                      setIsMobileMenuOpen(false)
+                    }}
+                    className={`
+                      w-full p-4 rounded-xl border-2 transition-all duration-300
+                      hover:shadow-lg hover:scale-[1.02] active:scale-95
+                      ${feature.borderColor} ${feature.bgColor}
+                      flex items-center gap-3 text-right
+                    `}
+                  >
+                    <div className={`w-12 h-12 bg-gradient-to-br ${feature.color} rounded-xl flex-center shadow-lg`}>
+                      <feature.icon className="text-white" size={20} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 text-lg">{feature.title}</h3>
+                      <p className="text-gray-600 text-sm">{feature.description}</p>
+                    </div>
+                    <Icons.ChevronDown className="text-gray-400 rotate-[-90deg]" size={20} />
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Main Content - Responsive Layout */}
       <main className="h-[calc(100vh-3rem)] flex">
-        {/* Left Side - AI Chat (50% width) */}
-        <div className="w-1/2 h-full p-2">
+        {/* AI Chat - Full width on mobile, 50% on desktop */}
+        <div className="w-full lg:w-1/2 h-full p-2">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -332,8 +417,8 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Right Side - 3 Columns Features Layout (50% width) */}
-        <div className="w-1/2 h-full p-2">
+        {/* Features Layout - Hidden on mobile, 50% width on desktop */}
+        <div className="hidden lg:block lg:w-1/2 h-full p-2">
           <div className="grid grid-cols-3 gap-3 h-full">
             {/* Column 1 (Right) - 3 features */}
             <div className="flex flex-col gap-3 h-full">
