@@ -68,7 +68,7 @@ export default function Home() {
       bgColor: 'bg-blue-50',
       borderColor: 'border-blue-200',
       textColor: 'text-blue-700',
-      height: 'h-32',
+      height: 'h-24',
       content: {
         date: currentTime?.getDate() || '--',
         month: currentTime?.toLocaleDateString('he-IL', { month: 'long' }),
@@ -85,7 +85,7 @@ export default function Home() {
       bgColor: 'bg-green-50',
       borderColor: 'border-green-200',
       textColor: 'text-green-700',
-      height: 'h-36',
+      height: 'h-28',
       content: {
         change: '+2.5%',
         status: 'יום טוב בבורסה',
@@ -104,7 +104,7 @@ export default function Home() {
       bgColor: 'bg-red-50',
       borderColor: 'border-red-200',
       textColor: 'text-red-700',
-      height: 'h-32',
+      height: 'h-24',
       content: {
         unread: 5,
         preview: [
@@ -121,7 +121,7 @@ export default function Home() {
       bgColor: 'bg-purple-50',
       borderColor: 'border-purple-200',
       textColor: 'text-purple-700',
-      height: 'h-36',
+      height: 'h-28',
       content: {
         pending: pendingTasks,
         completed: tasks.filter(t => t.done).length,
@@ -137,7 +137,7 @@ export default function Home() {
       bgColor: 'bg-yellow-50',
       borderColor: 'border-yellow-200',
       textColor: 'text-yellow-700',
-      height: 'h-28',
+      height: 'h-20',
       content: {
         tip: 'התחל את היום עם תרגיל קצר',
         category: 'בריאות',
@@ -153,7 +153,7 @@ export default function Home() {
       bgColor: 'bg-orange-50',
       borderColor: 'border-orange-200',
       textColor: 'text-orange-700',
-      height: 'h-40',
+      height: 'h-32',
       content: {
         completed: 3,
         total: 5,
@@ -172,7 +172,7 @@ export default function Home() {
       bgColor: 'bg-indigo-50',
       borderColor: 'border-indigo-200',
       textColor: 'text-indigo-700',
-      height: 'h-28',
+      height: 'h-20',
       content: {
         quote: 'הדרך הטובה ביותר לחזות את העתיד...',
         author: 'פיטר דרוקר',
@@ -188,7 +188,7 @@ export default function Home() {
       bgColor: 'bg-pink-50',
       borderColor: 'border-pink-200',
       textColor: 'text-pink-700',
-      height: 'h-32',
+      height: 'h-24',
       content: {
         unread: unreadNotifications,
         preview: notifications.slice(0, 1).map(n => ({ title: n.title, message: n.message }))
@@ -230,21 +230,21 @@ export default function Home() {
 
   return (
     <div className="h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
-      {/* Compact Header */}
-      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 z-50 shadow-lg h-12">
-        <div className="container mx-auto px-6 h-full">
+      {/* Ultra Compact Header */}
+      <header className="bg-white/80 backdrop-blur-xl border-b border-gray-200/50 z-50 shadow-lg h-10">
+        <div className="container mx-auto px-4 h-full">
           <div className="flex items-center justify-between h-full">
             {/* Logo & Brand */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <motion.div 
-                className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex-center shadow-lg"
+                className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-md flex-center shadow-lg"
                 whileHover={{ scale: 1.05, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Zap className="text-white" size={16} />
+                <Icons.Zap className="text-white" size={12} />
               </motion.div>
               <div>
-                <h1 className="text-sm font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <h1 className="text-xs font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   {getTimeBasedGreeting()}, {user.name}
                 </h1>
                 <p className="text-xs text-gray-600">העוזר החכם שלך</p>
@@ -252,42 +252,42 @@ export default function Home() {
             </div>
 
             {/* Center Stats */}
-            <div className="hidden lg:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-1">
               <motion.div 
-                className="flex items-center gap-1 px-2 py-1 bg-blue-50 rounded-md border border-blue-200"
+                className="flex items-center gap-1 px-1.5 py-0.5 bg-blue-50 rounded border border-blue-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Calendar className="text-blue-600" size={12} />
+                <Icons.Calendar className="text-blue-600" size={10} />
                 <span className="text-xs font-semibold text-blue-700">{todayEvents} אירועים</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-1 px-2 py-1 bg-green-50 rounded-md border border-green-200"
+                className="flex items-center gap-1 px-1.5 py-0.5 bg-green-50 rounded border border-green-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Check className="text-green-600" size={12} />
+                <Icons.Check className="text-green-600" size={10} />
                 <span className="text-xs font-semibold text-green-700">{pendingTasks} משימות</span>
               </motion.div>
               <motion.div 
-                className="flex items-center gap-1 px-2 py-1 bg-orange-50 rounded-md border border-orange-200"
+                className="flex items-center gap-1 px-1.5 py-0.5 bg-orange-50 rounded border border-orange-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Bell className="text-orange-600" size={12} />
+                <Icons.Bell className="text-orange-600" size={10} />
                 <span className="text-xs font-semibold text-orange-700">{unreadNotifications} התראות</span>
               </motion.div>
             </div>
 
             {/* Right Section */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               {/* Live Clock */}
               <motion.div 
-                className="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-md border border-gray-200"
+                className="flex items-center gap-1 px-1.5 py-0.5 bg-gray-100 rounded border border-gray-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Icons.Clock className="text-gray-600" size={12} />
+                <Icons.Clock className="text-gray-600" size={10} />
                 <span className="text-xs font-bold text-gray-900">
                   {currentTime?.toLocaleTimeString('he-IL', { 
                     hour: '2-digit', 
@@ -302,23 +302,23 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Content - Split Layout */}
-      <main className="h-[calc(100vh-3rem)] flex">
+      {/* Main Content - Ultra Compact Split Layout */}
+      <main className="h-[calc(100vh-2.5rem)] flex">
         {/* Left Side - AI Chat (50% width) */}
-        <div className="w-1/2 h-full p-3">
+        <div className="w-1/2 h-full p-2">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-2xl shadow-lg border border-gray-200 h-full overflow-hidden"
+            className="bg-white rounded-xl shadow-md border border-gray-200 h-full overflow-hidden"
           >
-            {/* Compact Chat Header */}
-            <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-lg flex-center shadow-lg">
-                  <Icons.Message className="text-white" size={16} />
+            {/* Ultra Compact Chat Header */}
+            <div className="p-3 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 bg-white/20 backdrop-blur-sm rounded-md flex-center shadow-md">
+                  <Icons.Message className="text-white" size={12} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-white">
+                  <h2 className="text-sm font-bold text-white">
                     עוזר חכם
                   </h2>
                   <p className="text-white/80 text-xs">שאל אותי כל שאלה על כל הפיצ'רים</p>
@@ -327,36 +327,36 @@ export default function Home() {
             </div>
             
             {/* Chat Content */}
-            <div className="h-[calc(100%-4rem)]">
+            <div className="h-[calc(100%-3rem)]">
               <ChatBot embedded={true} fullHeight={true} />
             </div>
           </motion.div>
         </div>
 
-        {/* Right Side - Compact Pinterest Style Features (50% width) */}
-        <div className="w-1/2 h-full p-3 overflow-y-auto">
-          <div className="columns-2 gap-3">
+        {/* Right Side - Ultra Compact Pinterest Style Features (50% width) */}
+        <div className="w-1/2 h-full p-2 overflow-y-auto">
+          <div className="columns-2 gap-2">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -5 }}
+                whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => openFeature(feature.id)}
                 className={`
-                  bg-white rounded-xl shadow-md border cursor-pointer mb-3 break-inside-avoid
-                  transition-all duration-300 hover:shadow-lg
+                  bg-white rounded-lg shadow-sm border cursor-pointer mb-2 break-inside-avoid
+                  transition-all duration-300 hover:shadow-md
                   ${feature.borderColor} hover:border-opacity-100
                   ${feature.height}
                 `}
               >
-                <div className="p-3 h-full flex flex-col">
+                <div className="p-2 h-full flex flex-col">
                   {/* Header */}
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className={`w-8 h-8 bg-gradient-to-br ${feature.color} rounded-lg flex-center shadow-md`}>
-                      <feature.icon className="text-white" size={16} />
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <div className={`w-6 h-6 bg-gradient-to-br ${feature.color} rounded-md flex-center shadow-sm`}>
+                      <feature.icon className="text-white" size={12} />
                     </div>
                     <div>
                       <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
@@ -365,29 +365,23 @@ export default function Home() {
                   </div>
 
                   {/* Content Preview */}
-                  <div className={`flex-1 ${feature.bgColor} rounded-lg border ${feature.borderColor} p-2`}>
+                  <div className={`flex-1 ${feature.bgColor} rounded-md border ${feature.borderColor} p-1.5`}>
                     {feature.id === 'calendar' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-gray-900 mb-1">
+                          <div className="text-sm font-bold text-gray-900 mb-1">
                             {feature.content.date}
                           </div>
-                          <div className="text-xs text-gray-600 mb-2">
-                            {feature.content.month}
-                          </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-gray-600">
                             {feature.content.events} אירועים היום
                           </div>
                         </div>
                         {feature.content.preview.length > 0 && (
-                          <div className="space-y-1 mt-2">
-                            {feature.content.preview.map((event, idx) => (
-                              <div key={idx} className="flex items-center gap-2 text-xs">
-                                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                <span className="text-gray-700 truncate">{event.title}</span>
-                                <span className="text-gray-500 text-xs">{event.time}</span>
-                              </div>
-                            ))}
+                          <div className="mt-1">
+                            <div className="flex items-center gap-1 text-xs">
+                              <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+                              <span className="text-gray-700 truncate">{feature.content.preview[0].title}</span>
+                            </div>
                           </div>
                         )}
                       </div>
@@ -396,21 +390,18 @@ export default function Home() {
                     {feature.id === 'stocks' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-xl font-bold text-green-600 mb-1">
+                          <div className="text-sm font-bold text-green-600 mb-1">
                             {feature.content.change}
                           </div>
-                          <div className="text-xs text-gray-600 mb-2">
+                          <div className="text-xs text-gray-600">
                             {feature.content.status}
                           </div>
                         </div>
-                        <div className="space-y-1">
-                          {feature.content.preview.map((stock, idx) => (
-                            <div key={idx} className="flex items-center justify-between text-xs">
-                              <span className="font-semibold text-gray-700">{stock.symbol}</span>
-                              <span className="text-green-600">{stock.change}</span>
-                              <span className="text-gray-500">{stock.price}</span>
-                            </div>
-                          ))}
+                        <div className="text-xs">
+                          <div className="flex items-center justify-between">
+                            <span className="font-semibold text-gray-700">{feature.content.preview[0].symbol}</span>
+                            <span className="text-green-600">{feature.content.preview[0].change}</span>
+                          </div>
                         </div>
                       </div>
                     )}
@@ -418,20 +409,16 @@ export default function Home() {
                     {feature.id === 'gmail' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-xl font-bold text-gray-900 mb-1">
+                          <div className="text-sm font-bold text-gray-900 mb-1">
                             {feature.content.unread}
                           </div>
                           <div className="text-xs text-gray-600">
                             הודעות חדשות
                           </div>
                         </div>
-                        <div className="space-y-1">
-                          {feature.content.preview.map((email, idx) => (
-                            <div key={idx} className="text-xs">
-                              <div className="font-semibold text-gray-700 truncate">{email.subject}</div>
-                              <div className="text-gray-500 text-xs">{email.sender} • {email.time}</div>
-                            </div>
-                          ))}
+                        <div className="text-xs">
+                          <div className="font-semibold text-gray-700 truncate">{feature.content.preview[0].subject}</div>
+                          <div className="text-gray-500 text-xs">{feature.content.preview[0].sender}</div>
                         </div>
                       </div>
                     )}
@@ -439,20 +426,20 @@ export default function Home() {
                     {feature.id === 'tasks' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-xl font-bold text-gray-900 mb-1">
+                          <div className="text-sm font-bold text-gray-900 mb-1">
                             {feature.content.pending}
                           </div>
                           <div className="text-xs text-gray-600">
                             משימות פתוחות
                           </div>
                         </div>
-                        <div className="space-y-1">
+                        <div className="space-y-0.5">
                           {feature.content.preview.map((task, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-xs">
-                              <div className={`w-3 h-3 rounded-full border flex-center ${
+                            <div key={idx} className="flex items-center gap-1 text-xs">
+                              <div className={`w-1.5 h-1.5 rounded-full border flex-center ${
                                 task.done ? 'bg-green-500 border-green-500' : 'border-gray-300'
                               }`}>
-                                {task.done && <Icons.Check className="text-white" size={8} />}
+                                {task.done && <Icons.Check className="text-white" size={4} />}
                               </div>
                               <span className={`flex-1 truncate ${task.done ? 'line-through text-gray-500' : 'text-gray-700'}`}>
                                 {task.text}
@@ -465,11 +452,11 @@ export default function Home() {
 
                     {feature.id === 'recommendations' && (
                       <div className="h-full flex flex-col justify-center text-center">
-                        <div className="text-2xl mb-2">{feature.content.icon}</div>
-                        <div className="text-sm text-gray-900 mb-2">
+                        <div className="text-sm mb-1">{feature.content.icon}</div>
+                        <div className="text-xs text-gray-900">
                           {feature.content.tip}
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-gray-500 mt-1">
                           {feature.content.category}
                         </div>
                       </div>
@@ -478,17 +465,17 @@ export default function Home() {
                     {feature.id === 'challenges' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-xl font-bold text-gray-900 mb-1">
+                          <div className="text-sm font-bold text-gray-900 mb-1">
                             {feature.content.completed}/{feature.content.total}
                           </div>
                           <div className="text-xs text-gray-600">
                             אתגרים הושלמו
                           </div>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-1">
                           {feature.content.challenges.map((challenge, idx) => (
                             <div key={idx} className="text-xs">
-                              <div className="flex items-center gap-2 mb-1">
+                              <div className="flex items-center gap-1 mb-1">
                                 <span>{challenge.icon}</span>
                                 <span className="font-semibold text-gray-700">{challenge.name}</span>
                               </div>
@@ -506,14 +493,11 @@ export default function Home() {
 
                     {feature.id === 'inspiration' && (
                       <div className="h-full flex flex-col justify-center text-center">
-                        <div className="text-lg text-gray-900 mb-2 italic">
+                        <div className="text-xs text-gray-900 mb-1 italic">
                           "{feature.content.quote}"
                         </div>
                         <div className="text-xs text-gray-600">
                           {feature.content.author}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          {feature.content.category}
                         </div>
                       </div>
                     )}
@@ -521,28 +505,24 @@ export default function Home() {
                     {feature.id === 'notifications' && (
                       <div className="h-full flex flex-col justify-between">
                         <div className="text-center">
-                          <div className="text-xl font-bold text-gray-900 mb-1">
+                          <div className="text-sm font-bold text-gray-900 mb-1">
                             {feature.content.unread}
                           </div>
                           <div className="text-xs text-gray-600">
                             התראות חדשות
                           </div>
                         </div>
-                        <div className="space-y-1">
-                          {feature.content.preview.map((notification, idx) => (
-                            <div key={idx} className="text-xs">
-                              <div className="font-semibold text-gray-700 truncate">{notification.title}</div>
-                              <div className="text-gray-500 truncate">{notification.message}</div>
-                            </div>
-                          ))}
+                        <div className="text-xs">
+                          <div className="font-semibold text-gray-700 truncate">{feature.content.preview[0].title}</div>
+                          <div className="text-gray-500 truncate">{feature.content.preview[0].message}</div>
                         </div>
                       </div>
                     )}
                   </div>
 
                   {/* Action Button */}
-                  <div className="mt-2">
-                    <div className={`w-full py-1.5 px-2 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded-md text-center`}>
+                  <div className="mt-1">
+                    <div className={`w-full py-1 px-1.5 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
                       פתח {feature.title}
                     </div>
                   </div>
