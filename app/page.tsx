@@ -332,202 +332,268 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Right Side - Compact Pinterest Style Features (50% width) */}
+        {/* Right Side - 3 Columns Features Layout (50% width) */}
         <div className="w-1/2 h-full p-2 overflow-y-auto">
-          <div className="columns-2 gap-4">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => openFeature(feature.id)}
-                className={`
-                  bg-white rounded-lg shadow-sm border cursor-pointer mb-4 break-inside-avoid
-                  transition-all duration-300 hover:shadow-md
-                  ${feature.borderColor} hover:border-opacity-100
-                  ${feature.height}
-                `}
-              >
-                <div className="p-3 h-full flex flex-col">
-                  {/* Header */}
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <div className={`w-5 h-5 bg-gradient-to-br ${feature.color} rounded flex-center shadow-sm`}>
-                      <feature.icon className="text-white" size={10} />
+          <div className="grid grid-cols-3 gap-3 h-full">
+            {/* Column 1 (Right) - 3 features */}
+            <div className="flex flex-col gap-3">
+              {features.slice(0, 3).map((feature, index) => (
+                <motion.div
+                  key={feature.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => openFeature(feature.id)}
+                  className={`
+                    bg-white rounded-lg shadow-sm border cursor-pointer
+                    transition-all duration-300 hover:shadow-md
+                    ${feature.borderColor} hover:border-opacity-100
+                    h-24 flex-shrink-0
+                  `}
+                >
+                  <div className="p-2 h-full flex flex-col">
+                    {/* Header */}
+                    <div className="flex items-center gap-1 mb-1">
+                      <div className={`w-4 h-4 bg-gradient-to-br ${feature.color} rounded flex-center shadow-sm`}>
+                        <feature.icon className="text-white" size={8} />
+                      </div>
+                      <div>
+                        <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
-                      <p className="text-xs text-gray-600">{feature.description}</p>
-                    </div>
-                  </div>
 
-                  {/* Content Preview */}
-                  <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-2`}>
-                    {feature.id === 'calendar' && (
-                      <div className="h-full flex flex-col justify-between">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-gray-900 mb-0.5">
-                            {feature.content.date}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            {feature.content.events} אירועים
-                          </div>
-                        </div>
-                        {feature.content.preview.length > 0 && (
-                          <div className="mt-0.5">
-                            <div className="flex items-center gap-0.5 text-xs">
-                              <div className="w-0.5 h-0.5 bg-blue-500 rounded-full"></div>
-                              <span className="text-gray-700 truncate">{feature.content.preview[0].title}</span>
+                    {/* Content Preview */}
+                    <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-1`}>
+                      {feature.id === 'calendar' && (
+                        <div className="h-full flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-xs font-bold text-gray-900">
+                              {feature.content.date}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              {feature.content.events} אירועים
                             </div>
                           </div>
-                        )}
-                      </div>
-                    )}
+                        </div>
+                      )}
 
-                    {feature.id === 'stocks' && (
-                      <div className="h-full flex flex-col justify-between">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-green-600 mb-0.5">
-                            {feature.content.change}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            {feature.content.status}
-                          </div>
-                        </div>
-                        <div className="text-xs">
-                          <div className="flex items-center justify-between">
-                            <span className="font-semibold text-gray-700">{feature.content.preview[0].symbol}</span>
-                            <span className="text-green-600">{feature.content.preview[0].change}</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {feature.id === 'gmail' && (
-                      <div className="h-full flex flex-col justify-between">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-gray-900 mb-0.5">
-                            {feature.content.unread}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            הודעות חדשות
-                          </div>
-                        </div>
-                        <div className="text-xs">
-                          <div className="font-semibold text-gray-700 truncate">{feature.content.preview[0].subject}</div>
-                          <div className="text-gray-500 text-xs">{feature.content.preview[0].sender}</div>
-                        </div>
-                      </div>
-                    )}
-
-                    {feature.id === 'tasks' && (
-                      <div className="h-full flex flex-col justify-between">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-gray-900 mb-0.5">
-                            {feature.content.pending}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            משימות פתוחות
-                          </div>
-                        </div>
-                        <div className="space-y-0.5">
-                          {feature.content.preview.map((task, idx) => (
-                            <div key={idx} className="flex items-center gap-0.5 text-xs">
-                              <div className={`w-1 h-1 rounded-full border flex-center ${
-                                task.done ? 'bg-green-500 border-green-500' : 'border-gray-300'
-                              }`}>
-                                {task.done && <Icons.Check className="text-white" size={3} />}
-                              </div>
-                              <span className={`flex-1 truncate ${task.done ? 'line-through text-gray-500' : 'text-gray-700'}`}>
-                                {task.text}
-                              </span>
+                      {feature.id === 'stocks' && (
+                        <div className="h-full flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-xs font-bold text-green-600">
+                              {feature.content.change}
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {feature.id === 'recommendations' && (
-                      <div className="h-full flex flex-col justify-center text-center">
-                        <div className="text-xs mb-0.5">{feature.content.icon}</div>
-                        <div className="text-xs text-gray-900">
-                          {feature.content.tip}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-0.5">
-                          {feature.content.category}
-                        </div>
-                      </div>
-                    )}
-
-                    {feature.id === 'challenges' && (
-                      <div className="h-full flex flex-col justify-between">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-gray-900 mb-0.5">
-                            {feature.content.completed}/{feature.content.total}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            הושלמו
-                          </div>
-                        </div>
-                        <div className="space-y-0.5">
-                          {feature.content.challenges.map((challenge, idx) => (
-                            <div key={idx} className="text-xs">
-                              <div className="flex items-center gap-0.5 mb-0.5">
-                                <span>{challenge.icon}</span>
-                                <span className="font-semibold text-gray-700">{challenge.name}</span>
-                              </div>
-                              <div className="w-full bg-gray-200 rounded-full h-0.5">
-                                <div 
-                                  className="bg-orange-500 h-0.5 rounded-full" 
-                                  style={{ width: `${challenge.progress}%` }}
-                                ></div>
-                              </div>
+                            <div className="text-xs text-gray-600">
+                              {feature.content.status}
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {feature.id === 'inspiration' && (
-                      <div className="h-full flex flex-col justify-center text-center">
-                        <div className="text-xs text-gray-900 mb-0.5 italic">
-                          "{feature.content.quote}"
-                        </div>
-                        <div className="text-xs text-gray-600">
-                          {feature.content.author}
-                        </div>
-                      </div>
-                    )}
-
-                    {feature.id === 'notifications' && (
-                      <div className="h-full flex flex-col justify-between">
-                        <div className="text-center">
-                          <div className="text-xs font-bold text-gray-900 mb-0.5">
-                            {feature.content.unread}
-                          </div>
-                          <div className="text-xs text-gray-600">
-                            התראות חדשות
                           </div>
                         </div>
-                        <div className="text-xs">
-                          <div className="font-semibold text-gray-700 truncate">{feature.content.preview[0].title}</div>
-                          <div className="text-gray-500 truncate">{feature.content.preview[0].message}</div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                      )}
 
-                  {/* Action Button */}
-                  <div className="mt-2">
-                    <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
-                      פתח
+                      {feature.id === 'gmail' && (
+                        <div className="h-full flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-xs font-bold text-gray-900">
+                              {feature.content.unread}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              הודעות חדשות
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="mt-1">
+                      <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
+                        פתח
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Column 2 (Middle) - 2 features */}
+            <div className="flex flex-col gap-3">
+              {features.slice(3, 5).map((feature, index) => (
+                <motion.div
+                  key={feature.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (index + 3) * 0.1 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => openFeature(feature.id)}
+                  className={`
+                    bg-white rounded-lg shadow-sm border cursor-pointer
+                    transition-all duration-300 hover:shadow-md
+                    ${feature.borderColor} hover:border-opacity-100
+                    h-32 flex-shrink-0
+                  `}
+                >
+                  <div className="p-2 h-full flex flex-col">
+                    {/* Header */}
+                    <div className="flex items-center gap-1 mb-1">
+                      <div className={`w-4 h-4 bg-gradient-to-br ${feature.color} rounded flex-center shadow-sm`}>
+                        <feature.icon className="text-white" size={8} />
+                      </div>
+                      <div>
+                        <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
+                      </div>
+                    </div>
+
+                    {/* Content Preview */}
+                    <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-1`}>
+                      {feature.id === 'tasks' && (
+                        <div className="h-full flex flex-col justify-between">
+                          <div className="text-center">
+                            <div className="text-xs font-bold text-gray-900 mb-0.5">
+                              {feature.content.pending}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              משימות פתוחות
+                            </div>
+                          </div>
+                          <div className="space-y-0.5">
+                            {feature.content.preview.map((task, idx) => (
+                              <div key={idx} className="flex items-center gap-0.5 text-xs">
+                                <div className={`w-1 h-1 rounded-full border flex-center ${
+                                  task.done ? 'bg-green-500 border-green-500' : 'border-gray-300'
+                                }`}>
+                                  {task.done && <Icons.Check className="text-white" size={3} />}
+                                </div>
+                                <span className={`flex-1 truncate ${task.done ? 'line-through text-gray-500' : 'text-gray-700'}`}>
+                                  {task.text}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {feature.id === 'recommendations' && (
+                        <div className="h-full flex flex-col justify-center text-center">
+                          <div className="text-xs mb-0.5">{feature.content.icon}</div>
+                          <div className="text-xs text-gray-900">
+                            {feature.content.tip}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-0.5">
+                            {feature.content.category}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="mt-1">
+                      <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
+                        פתח
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Column 3 (Left) - 3 features */}
+            <div className="flex flex-col gap-3">
+              {features.slice(5, 8).map((feature, index) => (
+                <motion.div
+                  key={feature.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: (index + 5) * 0.1 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => openFeature(feature.id)}
+                  className={`
+                    bg-white rounded-lg shadow-sm border cursor-pointer
+                    transition-all duration-300 hover:shadow-md
+                    ${feature.borderColor} hover:border-opacity-100
+                    h-24 flex-shrink-0
+                  `}
+                >
+                  <div className="p-2 h-full flex flex-col">
+                    {/* Header */}
+                    <div className="flex items-center gap-1 mb-1">
+                      <div className={`w-4 h-4 bg-gradient-to-br ${feature.color} rounded flex-center shadow-sm`}>
+                        <feature.icon className="text-white" size={8} />
+                      </div>
+                      <div>
+                        <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
+                      </div>
+                    </div>
+
+                    {/* Content Preview */}
+                    <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-1`}>
+                      {feature.id === 'challenges' && (
+                        <div className="h-full flex flex-col justify-between">
+                          <div className="text-center">
+                            <div className="text-xs font-bold text-gray-900 mb-0.5">
+                              {feature.content.completed}/{feature.content.total}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              הושלמו
+                            </div>
+                          </div>
+                          <div className="space-y-0.5">
+                            {feature.content.challenges.slice(0, 1).map((challenge, idx) => (
+                              <div key={idx} className="text-xs">
+                                <div className="flex items-center gap-0.5 mb-0.5">
+                                  <span>{challenge.icon}</span>
+                                  <span className="font-semibold text-gray-700">{challenge.name}</span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-0.5">
+                                  <div 
+                                    className="bg-orange-500 h-0.5 rounded-full" 
+                                    style={{ width: `${challenge.progress}%` }}
+                                  ></div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {feature.id === 'inspiration' && (
+                        <div className="h-full flex flex-col justify-center text-center">
+                          <div className="text-xs text-gray-900 mb-0.5 italic">
+                            "{feature.content.quote}"
+                          </div>
+                          <div className="text-xs text-gray-600">
+                            {feature.content.author}
+                          </div>
+                        </div>
+                      )}
+
+                      {feature.id === 'notifications' && (
+                        <div className="h-full flex items-center justify-center">
+                          <div className="text-center">
+                            <div className="text-xs font-bold text-gray-900">
+                              {feature.content.unread}
+                            </div>
+                            <div className="text-xs text-gray-600">
+                              התראות חדשות
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="mt-1">
+                      <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
+                        פתח
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </main>
