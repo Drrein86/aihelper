@@ -59,14 +59,14 @@ function generateSmartLocalResponse(message: string, userData: any): string {
   if (lowerMessage.includes('מה אני צריך') || lowerMessage.includes('היום') || lowerMessage.includes('לעשות')) {
     const greeting = currentHour < 12 ? 'בוקר טוב' : currentHour < 18 ? 'אחר הצהריים טובים' : 'ערב טוב'
     
-    let response = `${greeting} ${userName}! 🌟\n\n`
+    let response = `${greeting} ${userName}!\n\n`
     
     if (todayEvents.length > 0) {
-      response += `📅 **האירועים שלך היום:**\n${todayEvents.map((e: any) => `• ${e.time} - ${e.title}${e.location ? ` (${e.location})` : ''}`).join('\n')}\n\n`
+      response += `האירועים שלך היום:\n${todayEvents.map((e: any) => `- ${e.time} - ${e.title}${e.location ? ` (${e.location})` : ''}`).join('\n')}\n\n`
     }
     
     if (urgentTasks.length > 0) {
-      response += `🔴 **משימות דחופות:**\n${urgentTasks.map((t: any) => `• ${t.text}`).join('\n')}\n\n`
+      response += `משימות דחופות:\n${urgentTasks.map((t: any) => `- ${t.text}`).join('\n')}\n\n`
     }
     
     response += `יש לך ${pendingTasks.length} משימות ממתינות ו-${todayEvents.length} אירועים היום. איך אפשר לעזור?`
@@ -76,44 +76,44 @@ function generateSmartLocalResponse(message: string, userData: any): string {
   
   if (lowerMessage.includes('כסף') || lowerMessage.includes('תקציב') || lowerMessage.includes('השקע')) {
     const financial = userData.financial
-    return `💰 **המצב הכספי שלך:**
+    return `המצב הכספי שלך:
 
-💳 יתרה זמינה: ₪${financial?.balance?.toLocaleString() || '3,500'}
-📈 השקעות: ₪${financial?.investments?.toLocaleString() || '12,400'} (${financial?.investmentChange > 0 ? '+' : ''}${financial?.investmentChange || 2.4}%)
-📊 תקציב חודשי: ₪${financial?.monthlyBudget?.toLocaleString() || '8,000'}
+יתרה זמינה: ₪${financial?.balance?.toLocaleString() || '3,500'}
+השקעות: ₪${financial?.investments?.toLocaleString() || '12,400'} (${financial?.investmentChange > 0 ? '+' : ''}${financial?.investmentChange || 2.4}%)
+תקציב חודשי: ₪${financial?.monthlyBudget?.toLocaleString() || '8,000'}
 
-${financial?.upcomingPayments?.length > 0 ? `⚠️ תשלומים קרובים: ${financial.upcomingPayments.length}` : ''}
+${financial?.upcomingPayments?.length > 0 ? `תשלומים קרובים: ${financial.upcomingPayments.length}` : ''}
 
-המצב נראה טוב! יש עוד שאלות כספיות? 💪`
+המצב נראה טוב! יש עוד שאלות כספיות?`
   }
   
   if (lowerMessage.includes('משימ') || lowerMessage.includes('TODO') || lowerMessage.includes('עבוד')) {
     if (pendingTasks.length === 0) {
-      return '🎉 כל הכבוד! אין לך משימות ממתינות. היום שלך נקי! רוצה להוסיף משימה חדשה?'
+      return 'כל הכבוד! אין לך משימות ממתינות. היום שלך נקי! רוצה להוסיף משימה חדשה?'
     }
     
-    return `✅ **המשימות שלך (${pendingTasks.length}):**
+    return `המשימות שלך (${pendingTasks.length}):
 
 ${pendingTasks.map((t: any) => {
-      const priorityEmoji = t.priority === 'high' ? '🔴' : t.priority === 'medium' ? '🟡' : '🟢'
-      return `${priorityEmoji} ${t.text}`
+      const priorityLabel = t.priority === 'high' ? 'דחוף' : t.priority === 'medium' ? 'בינוני' : 'נמוך'
+      return `- ${t.text} (${priorityLabel})`
     }).join('\n')}
 
-איזו משימה תרצה להתחיל? 🚀`
+איזו משימה תרצה להתחיל?`
   }
   
   // Default response
-  return `שלום ${userName}! 👋 
+  return `שלום ${userName}!
 
-⚠️ **הערה:** הצ'אט כרגע פועל במצב מוגבל כי אין חיבור ל-OpenAI.
+הערה: הצ'אט כרגע פועל במצב מוגבל כי אין חיבור ל-OpenAI.
 
 אני יכול לעזור עם:
-📅 מידע על לוח הזמנים
-✅ ניהול משימות  
-💰 מעקב פיננסי
-🔔 תזכורות
+- מידע על לוח הזמנים
+- ניהול משימות  
+- מעקב פיננסי
+- תזכורות
 
-נסה לשאול: "מה יש לי היום?" או "הראה משימות" 😊`
+נסה לשאול: "מה יש לי היום?" או "הראה משימות"`
 }
 
 // Function to analyze user intent and suggest actions

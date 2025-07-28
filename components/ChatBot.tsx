@@ -205,11 +205,11 @@ export default function ChatBot({ embedded = false, fullHeight = false, noScroll
               </motion.div>
               
                              <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                 שלום! איך אפשר לעזור לך היום?
+                שלום! איך אפשר לעזור לך היום?
                </h3>
                <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-md mx-auto">
                  שאל אותי על המשימות, הכסף, הלוח זמנים או כל דבר אחר שתרצה
-               </p>
+              </p>
               
               {/* Enhanced Quick Start Suggestions */}
               {showSuggestions && (
@@ -219,25 +219,25 @@ export default function ChatBot({ embedded = false, fullHeight = false, noScroll
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, staggerChildren: 0.1 }}
                 >
-                  {quickSuggestions.slice(0, 4).map((suggestion, index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => handleSuggestionClick(suggestion.text)}
+                {quickSuggestions.slice(0, 4).map((suggestion, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={() => handleSuggestionClick(suggestion.text)}
                       className="bg-white hover:bg-gray-50 p-4 rounded-2xl transition-all duration-300 group border border-gray-200 shadow-sm hover:shadow-md"
                       whileHover={{ scale: 1.03, y: -3 }}
-                      whileTap={{ scale: 0.98 }}
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
+                    whileTap={{ scale: 0.98 }}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.1 * index }}
-                    >
+                  >
                       <div className={`text-3xl mb-3 ${suggestion.color} transition-all duration-300 group-hover:scale-110`}>
                         {suggestion.emoji}
                       </div>
                                              <div className="font-semibold text-sm text-gray-700 group-hover:text-blue-600 leading-relaxed">
                          {suggestion.text}
                        </div>
-                    </motion.button>
-                  ))}
+                  </motion.button>
+                ))}
                 </motion.div>
               )}
             </motion.div>
@@ -252,7 +252,7 @@ export default function ChatBot({ embedded = false, fullHeight = false, noScroll
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className={`flex items-start gap-3 max-w-2xl ${message.isUser ? 'flex-row' : 'flex-row-reverse'}`}>
+              <div className={`max-w-2xl`}>
                 {/* Message Bubble - No Icons */}
                 <div
                   className={`
@@ -262,16 +262,16 @@ export default function ChatBot({ embedded = false, fullHeight = false, noScroll
                       : 'glass border-white/20 text-primary'
                     }
                   `}
-                >
+              >
                   <p className="text-sm leading-relaxed font-medium mb-2">{message.text}</p>
                   <p className={`text-xs ${
                     message.isUser ? 'text-white/70' : 'text-secondary'
-                  }`}>
-                    {message.timestamp.toLocaleTimeString('he-IL', {
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
-                  </p>
+                }`}>
+                  {message.timestamp.toLocaleTimeString('he-IL', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  })}
+                </p>
                 </div>
               </div>
             </motion.div>
@@ -284,17 +284,7 @@ export default function ChatBot({ embedded = false, fullHeight = false, noScroll
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <div className="flex items-start gap-3 max-w-xl flex-row-reverse">
-                <motion.div 
-                  className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex-center shadow-lg"
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                >
-                  <Icons.Zap className="text-white" size={16} />
-                </motion.div>
+              <div className="max-w-xl">
                 <div className="glass px-6 py-4 rounded-2xl border border-white/20 shadow-lg">
                   <LoadingSpinner message="חושב על התשובה המושלמת..." />
                 </div>
@@ -336,16 +326,16 @@ export default function ChatBot({ embedded = false, fullHeight = false, noScroll
         <div className="glass-hover p-6 border-t border-white/10">
           <div className="flex gap-4 items-end">
             <div className="flex-1 relative">
-              <input
+            <input
                 ref={inputRef}
-                type="text"
-                value={currentMessage}
-                onChange={(e) => setCurrentMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="שאל אותי משהו חכם..."
+              type="text"
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="שאל אותי משהו חכם..."
                 className="input pr-12"
-                disabled={isTyping}
-              />
+              disabled={isTyping}
+            />
               <motion.button
                 onClick={() => setShowSuggestions(!showSuggestions)}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 btn-ghost p-1"
@@ -469,97 +459,97 @@ export default function ChatBot({ embedded = false, fullHeight = false, noScroll
               )}
 
               {chatMessages.length > 1 && chatMessages.slice(1).map((message, index) => (
-                <motion.div
-                  key={message.id}
-                  className={`flex ${message.isUser ? 'justify-start' : 'justify-end'}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+               <motion.div
+                 key={message.id}
+                 className={`flex ${message.isUser ? 'justify-start' : 'justify-end'}`}
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
-                >
-                  <div
+               >
+                 <div
                     className={`max-w-xs px-4 py-3 rounded-2xl shadow-lg backdrop-blur-sm border ${
-                      message.isUser
+                     message.isUser
                         ? 'bg-gradient-to-br from-blue-500/90 to-cyan-500/90 text-white border-blue-300/30'
                         : 'glass text-primary border-white/20'
-                    }`}
-                  >
+                   }`}
+                 >
                     <p className="text-sm font-medium leading-relaxed">{message.text}</p>
-                    <p className={`text-xs mt-1 ${
+                   <p className={`text-xs mt-1 ${
                       message.isUser ? 'text-white/70' : 'text-secondary'
-                    }`}>
-                      {message.timestamp.toLocaleTimeString('he-IL', {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-              
-              {isTyping && (
-                <motion.div
-                  className="flex justify-end"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
+                   }`}>
+                     {message.timestamp.toLocaleTimeString('he-IL', {
+                       hour: '2-digit',
+                       minute: '2-digit'
+                     })}
+                   </p>
+                 </div>
+               </motion.div>
+             ))}
+             
+             {isTyping && (
+               <motion.div
+                 className="flex justify-end"
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+               >
                   <div className="glass px-4 py-3 rounded-2xl border border-white/20 shadow-lg">
-                    <LoadingSpinner message="חושב..." />
-                  </div>
-                </motion.div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
+                   <LoadingSpinner message="חושב..." />
+                 </div>
+               </motion.div>
+             )}
+             <div ref={messagesEndRef} />
+           </div>
 
             {/* Quick Suggestions for popup */}
-            {chatMessages.length <= 1 && (
+           {chatMessages.length <= 1 && (
               <div className="px-4 py-2 border-t border-white/10">
                 <p className="text-xs font-bold text-primary mb-2 flex items-center gap-1">
                   <Icons.Sparkles size={12} />
                   הצעות מהירות:
                 </p>
-                <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2">
                   {quickSuggestions.slice(0, 3).map((suggestion, index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => handleSuggestionClick(suggestion.text)}
+                  <motion.button
+                    key={index}
+                    onClick={() => handleSuggestionClick(suggestion.text)}
                       className="btn-ghost text-xs px-3 py-1 rounded-full flex items-center gap-1"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                       <span className={suggestion.color}>{suggestion.emoji}</span>
                       <span>{suggestion.text.split(' ').slice(0, 2).join(' ')}</span>
-                    </motion.button>
-                  ))}
-                </div>
+                  </motion.button>
+                ))}
               </div>
-            )}
+            </div>
+          )}
 
             {/* Enhanced Input Area */}
             <div className="p-4 border-t border-white/10">
               <div className="flex gap-3">
-                <input
-                  type="text"
-                  value={currentMessage}
-                  onChange={(e) => setCurrentMessage(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="כתוב הודעה..."
+              <input
+                type="text"
+                value={currentMessage}
+                onChange={(e) => setCurrentMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="כתוב הודעה..."
                   className="input text-sm"
-                  disabled={isTyping}
-                />
-                <motion.button
-                  onClick={handleSendMessage}
-                  disabled={!currentMessage.trim() || isTyping}
+                disabled={isTyping}
+              />
+              <motion.button
+                onClick={handleSendMessage}
+                disabled={!currentMessage.trim() || isTyping}
                   className="btn-primary w-10 h-10 rounded-xl flex-center disabled:opacity-50 disabled:cursor-not-allowed"
-                  whileHover={{ scale: currentMessage.trim() ? 1.05 : 1 }}
-                  whileTap={{ scale: currentMessage.trim() ? 0.95 : 1 }}
-                >
+                whileHover={{ scale: currentMessage.trim() ? 1.05 : 1 }}
+                whileTap={{ scale: currentMessage.trim() ? 0.95 : 1 }}
+              >
                   <Icons.Send className="text-white" size={14} />
-                </motion.button>
-              </div>
+              </motion.button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  </>
   )
 } 

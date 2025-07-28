@@ -478,7 +478,7 @@ export const useStore = create<AppState>()(
     chatMessages: [
       {
         id: 1,
-        text: 'שלום אליאור! 👋 אני העוזר החכם שלך. מה אפשר לעזור לך היום?',
+        text: 'שלום אליאור! אני העוזר החכם שלך. מה אפשר לעזור לך היום?',
         isUser: false,
         timestamp: new Date()
       }
@@ -493,7 +493,7 @@ export const useStore = create<AppState>()(
     clearChat: () => set({
       chatMessages: [{
         id: 1,
-        text: 'שלום אליאור! 👋 אני העוזר החכם שלך. מה אפשר לעזור לך היום?',
+        text: 'שלום אליאור! אני העוזר החכם שלך. מה אפשר לעזור לך היום?',
         isUser: false,
         timestamp: new Date()
       }]

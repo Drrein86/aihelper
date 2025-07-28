@@ -45,7 +45,10 @@ export async function POST(req: NextRequest) {
     console.log('שולח ל-OpenAI:', { messageCount: messages.length })
 
     // בדיקה שיש API key
-    if (!process.env.OPENAI_API_KEY) {
+    const apiKey = process.env.OPENAI_API_KEY
+    console.log('🔑 API Key status:', apiKey ? `Found (${apiKey.length} chars)` : 'Missing')
+    
+    if (!apiKey) {
       console.error('❌ OpenAI API key לא הוגדר')
       return NextResponse.json(
         { error: 'OpenAI API key not configured' },
@@ -60,18 +63,23 @@ export async function POST(req: NextRequest) {
       const timeoutId = setTimeout(() => controller.abort(), 9500)
 
       completion = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages,
-        max_tokens: 800,
-        temperature: 0.7,
-        stream: false
+      model: 'gpt-3.5-turbo',
+      messages,
+      max_tokens: 800,
+      temperature: 0.7,
+      stream: false
       }, {
         signal: controller.signal
       })
 
       clearTimeout(timeoutId)
           } catch (openaiError: any) {
-        console.error('❌ שגיאת OpenAI:', openaiError)
+        console.error('❌ שגיאת OpenAI:', {
+          name: openaiError.name,
+          message: openaiError.message,
+          status: openaiError.status,
+          error: openaiError.error
+        })
         
         if (openaiError.name === 'AbortError' || openaiError.message?.includes('aborted') || openaiError.message?.includes('APIUserAbortError')) {
           return NextResponse.json(
@@ -80,9 +88,24 @@ export async function POST(req: NextRequest) {
           )
         }
         
+        // שגיאת API key או quota
+        if (openaiError.status === 401) {
+          return NextResponse.json(
+            { error: 'שגיאת אימות OpenAI - בדוק את ה-API key' },
+            { status: 401 }
+          )
+        }
+        
+        if (openaiError.status === 429) {
+          return NextResponse.json(
+            { error: 'חרגת מהמכסה של OpenAI - נסה שוב מאוחר יותר' },
+            { status: 429 }
+          )
+        }
+        
         return NextResponse.json(
-          { error: 'OpenAI service temporarily unavailable' },
-          { status: 503 }
+          { error: `שגיאת OpenAI: ${openaiError.message || 'שירות לא זמין'}` },
+          { status: openaiError.status || 503 }
         )
       }
 

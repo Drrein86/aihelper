@@ -29,7 +29,7 @@ export default function Home() {
     user, 
     tasks, 
     events, 
-    notifications,
+    notifications, 
     financial
   } = useStore()
 
@@ -202,7 +202,7 @@ export default function Home() {
   }
 
   if (!mounted) {
-    return (
+  return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -224,7 +224,7 @@ export default function Home() {
             />
           </div>
         </motion.div>
-      </div>
+              </div>
     )
   }
 
@@ -249,19 +249,19 @@ export default function Home() {
                 </h1>
                 <p className="text-xs text-gray-600">העוזר החכם שלך</p>
               </div>
-            </div>
-
+          </div>
+          
             {/* Center Stats - Hidden on mobile */}
             <div className="hidden lg:flex items-center gap-2">
-              <motion.div 
+        <motion.div 
                 className="flex items-center gap-1 px-2 py-1 bg-blue-50 rounded-md border border-blue-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
-              >
+        >
                 <Icons.Calendar className="text-blue-600" size={10} />
                 <span className="text-xs font-semibold text-blue-700">{todayEvents} אירועים</span>
               </motion.div>
-              <motion.div 
+          <motion.div 
                 className="flex items-center gap-1 px-2 py-1 bg-green-50 rounded-md border border-green-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -292,11 +292,11 @@ export default function Home() {
               </motion.button>
 
               {/* Live Clock */}
-              <motion.div 
+        <motion.div 
                 className="hidden sm:flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-md border border-gray-200"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
-              >
+        >
                 <Icons.Clock className="text-gray-600" size={10} />
                 <span className="text-xs font-bold text-gray-900">
                   {currentTime?.toLocaleTimeString('he-IL', { 
@@ -305,7 +305,7 @@ export default function Home() {
                     hour12: false 
                   }) || '--:--'}
                 </span>
-              </motion.div>
+        </motion.div>
               <GoogleAuthButton />
             </div>
           </div>
@@ -315,21 +315,21 @@ export default function Home() {
       {/* Mobile Side Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
+        <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 lg:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <motion.div
+        >
+          <motion.div 
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25 }}
               className="w-80 h-full bg-white shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
+            onClick={(e) => e.stopPropagation()}
+          >
               {/* Mobile Menu Header */}
               <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500">
                 <div className="flex items-center justify-between">
@@ -342,14 +342,14 @@ export default function Home() {
                       <p className="text-white/80 text-sm">כל הפיצ'רים</p>
                     </div>
                   </div>
-                  <button
+              <button 
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
                   >
                     <Icons.Close className="text-white" size={16} />
-                  </button>
+              </button>
+          </div>
                 </div>
-              </div>
 
               {/* Mobile Menu Items */}
               <div className="p-4 space-y-3 h-[calc(100%-5rem)] overflow-y-auto">
@@ -372,7 +372,7 @@ export default function Home() {
                   >
                     <div className={`w-12 h-12 bg-gradient-to-br ${feature.color} rounded-xl flex-center shadow-lg`}>
                       <feature.icon className="text-white" size={20} />
-                    </div>
+                </div>
                     <div className="flex-1">
                       <h3 className="font-bold text-gray-900 text-lg">{feature.title}</h3>
                       <p className="text-gray-600 text-sm">{feature.description}</p>
@@ -409,13 +409,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             {/* Chat Content - No Scroll */}
             <div className="h-[calc(100%-3.5rem)] overflow-hidden">
               <ChatBot embedded={true} fullHeight={true} noScroll={true} />
-            </div>
+          </div>
           </motion.div>
-        </div>
+                </div>
 
         {/* Features Layout - Hidden on mobile, 50% width on desktop */}
         <div className="hidden lg:block lg:w-1/2 h-full p-2">
@@ -437,7 +437,7 @@ export default function Home() {
                     ${feature.borderColor} hover:border-opacity-100
                     flex-1 min-h-0
                   `}
-                >
+                    >
                   <div className="p-2 h-full flex flex-col">
                     {/* Header */}
                     <div className="flex items-center gap-1 mb-1">
@@ -461,7 +461,7 @@ export default function Home() {
                               {feature.content.events} אירועים
                             </div>
                           </div>
-                        </div>
+                </div>
                       )}
 
                       {feature.id === 'stocks' && (
@@ -487,25 +487,25 @@ export default function Home() {
                               הודעות חדשות
                             </div>
                           </div>
-                        </div>
-                      )}
                     </div>
+                  )}
+                </div>
 
                     {/* Action Button */}
                     <div className="mt-1">
                       <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
                         פתח
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+              </div>
             </div>
+            </div>
+          </motion.div>
+              ))}
+          </div>
 
             {/* Column 2 (Middle) - 2 features */}
             <div className="flex flex-col gap-3 h-full">
               {features.slice(3, 5).map((feature, index) => (
-                <motion.div
+            <motion.div 
                   key={feature.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -519,7 +519,7 @@ export default function Home() {
                     ${feature.borderColor} hover:border-opacity-100
                     flex-1 min-h-0
                   `}
-                >
+            >
                   <div className="p-2 h-full flex flex-col">
                     {/* Header */}
                     <div className="flex items-center gap-1 mb-1">
@@ -529,8 +529,8 @@ export default function Home() {
                       <div>
                         <h3 className="text-xs font-bold text-gray-900">{feature.title}</h3>
                       </div>
-                    </div>
-
+              </div>
+              
                     {/* Content Preview */}
                     <div className={`flex-1 ${feature.bgColor} rounded border ${feature.borderColor} p-1`}>
                       {feature.id === 'tasks' && (
@@ -561,7 +561,7 @@ export default function Home() {
                             );
                           })}
                           </div>
-                        </div>
+                </div>
                       )}
 
                       {feature.id === 'recommendations' && (
@@ -575,8 +575,8 @@ export default function Home() {
                           </div>
                         </div>
                       )}
-                    </div>
-
+                  </div>
+                  
                     {/* Action Button */}
                     <div className="mt-1">
                       <div className={`w-full py-0.5 px-1 bg-gradient-to-r ${feature.color} text-white text-xs font-semibold rounded text-center`}>
@@ -586,8 +586,8 @@ export default function Home() {
                   </div>
                 </motion.div>
               ))}
-            </div>
-
+                </div>
+                
             {/* Column 3 (Left) - 3 features */}
             <div className="flex flex-col gap-3 h-full">
               {features.slice(5, 8).map((feature, index) => (
@@ -679,8 +679,8 @@ export default function Home() {
                         פתח
                       </div>
                     </div>
-                  </div>
-                </motion.div>
+              </div>
+            </motion.div>
               ))}
             </div>
           </div>
@@ -805,10 +805,10 @@ export default function Home() {
                           </div>
                         </div>
                       ))}
-                    </div>
-                  </div>
-                )}
               </div>
+          </div>
+        )}
+            </div>
             </motion.div>
           </motion.div>
         )}
