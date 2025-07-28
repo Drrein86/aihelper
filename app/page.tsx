@@ -630,7 +630,7 @@ export default function Home() {
                             </div>
                           </div>
                           <div className="space-y-0.5">
-                            {feature.content.challenges.slice(0, 1).map((challenge, idx) => (
+                            {feature.content.challenges?.slice(0, 1).map((challenge, idx) => (
                               <div key={idx} className="text-xs">
                                 <div className="flex items-center gap-0.5 mb-0.5">
                                   <span>{challenge.icon}</span>
@@ -643,7 +643,7 @@ export default function Home() {
                                   ></div>
                                 </div>
                               </div>
-                            ))}
+                            )) || []}
                           </div>
                         </div>
                       )}
